@@ -12,7 +12,9 @@ const DEMO_FILES: { category: string; name: string; size: number; type: string }
   { category: "logotipos", name: "vb-logo-negativo.svg", size: 708, type: "image/svg+xml" },
   { category: "logotipos", name: "vb-simbolo.svg", size: 343, type: "image/svg+xml" },
   { category: "tipografia", name: "Montserrat-VariableFont_wght.ttf", size: 688600, type: "font/ttf" },
-  { category: "tipografia", name: "OFL.txt", size: 4400, type: "text/plain" },
+  { category: "tipografia", name: "Montserrat-OFL.txt", size: 4400, type: "text/plain" },
+  { category: "tipografia", name: "Inter-Variable.ttf", size: 876576, type: "font/ttf" },
+  { category: "tipografia", name: "Inter-OFL.txt", size: 4377, type: "text/plain" },
 ];
 
 export function listDemoAssets(category: string): AssetFile[] {

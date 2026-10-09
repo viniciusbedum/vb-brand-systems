@@ -190,6 +190,17 @@ Every page, menu title and interface string exists in both languages; `npm run d
 - The search box in the sidebar is not connected yet.
 - The demo asset categories keep Portuguese URLs (`/assets/logotipos`) in both languages: they name the storage folders.
 
+## Credits
+
+The sample brand ships with two open-source typefaces, both licensed under the [SIL Open Font License 1.1](https://openfontlicense.org), with their license files next to the fonts:
+
+- **Montserrat**, used for headings. Copyright The Montserrat Project Authors. Source: [github.com/JulietaUla/Montserrat](https://github.com/JulietaUla/Montserrat). License: `brand/fonts/montserrat/OFL.txt`.
+- **Inter**, used for body text and the interface. Copyright 2020 The Inter Project Authors. Source: [github.com/rsms/inter](https://github.com/rsms/inter). License: `brand/fonts/inter/OFL.txt`.
+
+Both are also available to download in the sample **Assets > Typography** category.
+
 ## License
 
-MIT with the [Commons Clause](LICENSE): free to use, modify and share, but you may not sell the software or a product or service whose value comes substantially from it.
+[PolyForm Shield 1.0.0](LICENSE). You can use, modify and share this software for any purpose, including inside a company for its own brand, **except** to provide a product that competes with it, such as selling or hosting this brand system as a product or service. Read the [license](LICENSE) for the exact terms.
+
+The fonts keep their own licenses (see [Credits](#credits)); the project license does not cover them.
