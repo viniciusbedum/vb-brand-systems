@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { GitBranch } from "lucide-react";
+import { GitBranch } from "@/lib/icons";
 import { brand } from "@/brand/config";
 import { isDemoMode } from "@/lib/features";
 import { Badge } from "@/components/ui/badge";

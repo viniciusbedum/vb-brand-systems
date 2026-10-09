@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronDown } from "lucide-react";
+import { CaretDown as ChevronDown } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 
 export type SelectProps = React.SelectHTMLAttributes<HTMLSelectElement>;

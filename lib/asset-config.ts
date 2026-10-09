@@ -12,7 +12,7 @@ export const assetCategories: AssetCategory[] = [
   {
     slug: "logotipos",
     label: "Logotipos",
-    icon: "Layers",
+    icon: "Stack",
     description: "Versões do logo em diferentes formatos e variações.",
     accept: ".svg,.png,.pdf,.ai,.eps",
     emptyMessage: "Nenhum logotipo adicionado ainda.",
@@ -21,7 +21,7 @@ export const assetCategories: AssetCategory[] = [
   {
     slug: "tipografia",
     label: "Tipografia",
-    icon: "Type",
+    icon: "TextT",
     description: "Fontes e arquivos de tipografia da marca.",
     accept: ".ttf,.otf,.woff,.woff2",
     emptyMessage: "Nenhuma fonte adicionada ainda.",
@@ -39,7 +39,7 @@ export const assetCategories: AssetCategory[] = [
   {
     slug: "videos",
     label: "Vídeos",
-    icon: "Video",
+    icon: "VideoCamera",
     description: "Vídeos, motion graphics e animações da marca.",
     accept: "video/*",
     emptyMessage: "Nenhum vídeo adicionado ainda.",
@@ -48,7 +48,7 @@ export const assetCategories: AssetCategory[] = [
   {
     slug: "audios",
     label: "Áudios",
-    icon: "Music",
+    icon: "MusicNotes",
     description: "Jingles, trilhas sonoras e identidade sonora.",
     accept: "audio/*",
     emptyMessage: "Nenhum áudio adicionado ainda.",

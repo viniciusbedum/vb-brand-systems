@@ -6,7 +6,7 @@ import Link from "next/link";
 import { navConfig } from "@/lib/navigation";
 import { assetCategories } from "@/lib/asset-config";
 import { SidebarSection } from "./SidebarSection";
-import { MessageCircle, MoreVertical, Pin, Pencil, Trash2 } from "lucide-react";
+import { ChatCircle as MessageCircle, DotsThreeVertical as MoreVertical, PushPin as Pin, Pencil, Trash as Trash2 } from "@/lib/icons";
 import { Input } from "@/components/ui/input";
 import { buttonVariants } from "@/components/ui/button";
 import {
@@ -17,7 +17,7 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { useConversations, type Conversation } from "@/lib/conversations-context";
-import * as LucideIcons from "lucide-react";
+import { getNavigationIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { isAIVisible } from "@/lib/features";
 
@@ -158,7 +158,7 @@ function ConversationItem({
   );
 }
 
-function ConversationList() {
+export function ConversationList() {
   const pathname = usePathname();
   const { conversations, loading, deleteConversation, renameConversation, togglePin } = useConversations();
 
@@ -228,7 +228,7 @@ export function SidebarContent(_props: SidebarContentProps) {
           <div className="space-y-0.5">
             {assetCategories.map((category) => {
               const isActive = pathname === `/assets/${category.slug}` || (pathname === "/assets" && category.slug === "logotipos");
-              const Icon = (LucideIcons as unknown as Record<string, React.ComponentType<{ size?: number; className?: string }>>)[category.icon];
+              const Icon = getNavigationIcon(category.icon);
               return (
                 <Link
                   key={category.slug}

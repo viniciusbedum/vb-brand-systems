@@ -1,6 +1,6 @@
 "use client";
 
-import { X, Download, FileText, Music, Video, Image, File } from "lucide-react";
+import { X, DownloadSimple as Download, FileText, MusicNotes as Music, VideoCamera as Video, Image, File } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";

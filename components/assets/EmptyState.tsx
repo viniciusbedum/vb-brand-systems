@@ -1,4 +1,4 @@
-import { Upload } from "lucide-react";
+import { UploadSimple as Upload } from "@/lib/icons";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 

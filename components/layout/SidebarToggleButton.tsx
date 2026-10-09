@@ -1,6 +1,6 @@
 "use client";
 
-import { PanelLeft } from "lucide-react";
+import { SidebarSimple as PanelLeft } from "@/lib/icons";
 import { useSidebar } from "@/lib/sidebar-context";
 import { Button } from "@/components/ui/button";
 

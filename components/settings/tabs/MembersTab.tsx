@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search } from 'lucide-react'
+import { MagnifyingGlass as Search } from "@/lib/icons";
 import { createClient } from '@/lib/supabase'
 import type { Profile } from '@/lib/auth'
 import { Badge } from '@/components/ui/badge'

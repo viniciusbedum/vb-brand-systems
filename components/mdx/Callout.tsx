@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Info, AlertTriangle, CheckCircle, XCircle } from "lucide-react";
+import { Info, Warning as AlertTriangle, CheckCircle, XCircle } from "@/lib/icons";
 
 type CalloutType = "info" | "warning" | "tip" | "danger";
 

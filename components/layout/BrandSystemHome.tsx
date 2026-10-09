@@ -1,5 +1,5 @@
 import Link from "next/link";
-import * as LucideIcons from "lucide-react";
+import { getNavigationIcon } from "@/lib/icons";
 import { HomeChat } from "@/components/ai/HomeChat";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,14 +8,12 @@ import { navConfig } from "@/lib/navigation";
 import { cn } from "@/lib/utils";
 import { isAIVisible } from "@/lib/features";
 
-type IconComponent = React.ComponentType<{ size?: number }>;
-const icons = LucideIcons as unknown as Record<string, IconComponent>;
 
 const CARDS = navConfig.map((section) => ({
   title: section.title,
   pages: section.items.length,
   href: section.href ?? (section.items[0] ? `/docs/${section.items[0].slug}` : null),
-  icon: icons[section.icon ?? ""] ?? LucideIcons.BookOpen,
+  icon: getNavigationIcon(section.icon),
 }));
 
 type BrandSystemHomeProps = {

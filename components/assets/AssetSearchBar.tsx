@@ -1,6 +1,6 @@
 "use client";
 
-import { Search } from "lucide-react";
+import { MagnifyingGlass as Search } from "@/lib/icons";
 import { Input } from "@/components/ui/input";
 
 type AssetSearchBarProps = {

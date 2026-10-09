@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowUp, RotateCcw } from "lucide-react";
+import { ArrowUp, ArrowCounterClockwise as RotateCcw } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { useConversations } from "@/lib/conversations-context";
 import { brand } from "@/brand/config";
@@ -52,6 +52,18 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
   const bottomRef = useRef<HTMLDivElement>(null);
   const convIdRef = useRef<string | null>(conversationId ?? null);
   const autoSubmittedRef = useRef(false);
+  const layoutRef = useRef<HTMLDivElement>(null);
+  const composerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const composer = composerRef.current;
+    if (!composer) return;
+    const measure = () => layoutRef.current?.style.setProperty("--mobile-composer-height", `${composer.getBoundingClientRect().height}px`);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(composer);
+    return () => observer.disconnect();
+  }, [messages.length > 0]);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -229,10 +241,10 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
   );
 
   return (
-    <div className="flex h-full w-full min-w-0 flex-col">
+    <div ref={layoutRef} className="mobile-chat-layout flex h-full w-full min-w-0 flex-col">
       {hasMessages ? (
         <>
-          <div className="flex-1 overflow-y-auto overflow-x-hidden">
+          <div className="mobile-chat-messages flex-1 overflow-y-auto overflow-x-hidden">
             <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8 space-y-6">
               <div className="flex justify-end">
                 <Button
@@ -280,12 +292,12 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
               <div ref={bottomRef} />
             </div>
           </div>
-          <div className="shrink-0 border-t border-border bg-background/80 backdrop-blur p-4">
+          <div ref={composerRef} className="mobile-chat-composer shrink-0 border-t border-border bg-background/80 backdrop-blur p-4">
             <div className="mx-auto max-w-3xl">{inputBox}</div>
           </div>
         </>
       ) : (
-        <div data-backdrop className="flex flex-1 flex-col items-center justify-center overflow-y-auto px-4 sm:px-6">
+        <div data-backdrop className="mobile-chat-empty flex flex-1 flex-col items-center justify-center overflow-y-auto px-4 sm:px-6">
           <div className="w-full max-w-2xl space-y-6">
             <div className="space-y-2 text-center">
               <h1 className="font-heading text-2xl md:text-3xl font-bold tracking-tight">

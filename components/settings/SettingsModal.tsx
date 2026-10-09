@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { User, Key, Users } from 'lucide-react'
+import { User, Key, Users } from "@/lib/icons";
 import { Dialog } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'

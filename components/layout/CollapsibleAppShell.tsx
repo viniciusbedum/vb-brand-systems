@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { PanelLeft, Menu } from "lucide-react";
+import { SidebarSimple as PanelLeft } from "@/lib/icons";
 import { SidebarProvider, useSidebar } from "@/lib/sidebar-context";
 import { brand } from "@/brand/config";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Sheet } from "@/components/ui/sheet";
+import { Dialog } from "@/components/ui/dialog";
+import { ConversationList } from "./SidebarContent";
+import { isAIVisible } from "@/lib/features";
 import { TopBar } from "./TopBar";
+import { SidebarIconBar } from "./SidebarIconBar";
+import { MobileSectionNav } from "./MobileSectionNav";
 
 const wordmarkInitials = brand.wordmark.split(" ")[0];
 
@@ -22,11 +26,36 @@ function Shell({
   const { isOpen, toggle } = useSidebar();
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const contentRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
-  /* Fecha o menu mobile ao navegar */
+  useEffect(() => {
+    const header = headerRef.current;
+    const content = contentRef.current;
+    if (!header || !content) return;
+    const measure = () => {
+      const height = `${header.getBoundingClientRect().height}px`;
+      content.style.setProperty("--mobile-header-height", height);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(header);
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  /* Fecha o histórico ao navegar. */
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 768px)");
+    const closeOnDesktop = () => { if (desktop.matches) setMobileOpen(false); };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   return (
     <div className="app-shell flex h-full bg-background">
@@ -53,37 +82,27 @@ function Shell({
         )}
       </div>
 
-      {/* Mobile: sidebar dentro de um Sheet */}
-      <Sheet open={mobileOpen} onOpenChange={setMobileOpen} side="left" title="Menu de navegação">
-        <div
-          className="h-full px-3 pb-3 [&>aside]:rounded-[0] [&>aside]:border-0 [&>aside]:bg-transparent [&>aside]:shadow-none [&>aside]:backdrop-blur-none"
-          onClick={(e) => {
-            if ((e.target as HTMLElement).closest("a")) setMobileOpen(false);
-          }}
-        >
-          {sidebar}
-        </div>
-      </Sheet>
+      {isAIVisible && (
+        <Dialog open={mobileOpen} onOpenChange={setMobileOpen} title="Histórico de conversas">
+          <div onClick={(event) => {
+            if ((event.target as HTMLElement).closest("a")) setMobileOpen(false);
+          }}>
+            <ConversationList />
+          </div>
+        </Dialog>
+      )}
 
       {/* Área de conteúdo */}
-      <div id="content-area" className="flex-1 min-w-0 flex flex-col h-full">
-        <header className="md:hidden sticky top-0 z-30 flex h-14 flex-shrink-0 items-center gap-2 border-b border-border bg-background/80 px-4 backdrop-blur">
-          <Button
-            variant="ghost"
-            size="icon"
-            aria-label="Abrir menu"
-            onClick={() => setMobileOpen(true)}
-            className="-ml-2"
-          >
-            <Menu aria-hidden="true" />
-          </Button>
-          <span className="truncate text-sm font-heading font-bold tracking-[0.14em] select-none">
-            {brand.wordmark}
-          </span>
+      <div ref={contentRef} id="content-area" className="mobile-content-area flex-1 min-w-0 flex flex-col h-full">
+        <header ref={headerRef} className="mobile-section-header md:hidden shrink-0 min-w-0">
+          <MobileSectionNav onOpenHistory={() => setMobileOpen(true)} />
         </header>
         <TopBar />
         {children}
       </div>
+      <nav aria-label="Navegação rápida" className="mobile-bottom-nav fixed inset-x-4 z-40 flex justify-center md:hidden pointer-events-none [&>div]:pointer-events-auto">
+        <SidebarIconBar mobile />
+      </nav>
     </div>
   );
 }

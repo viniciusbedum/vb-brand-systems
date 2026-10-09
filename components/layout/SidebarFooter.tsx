@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { User, Settings, LogOut } from 'lucide-react'
+import { User, Gear as Settings, SignOut as LogOut } from "@/lib/icons";
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'

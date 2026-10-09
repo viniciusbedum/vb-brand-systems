@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { X } from "lucide-react";
+import { X } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
 import { useNativeDialog } from "./use-native-dialog";
@@ -13,6 +13,8 @@ export interface SheetProps {
   title: React.ReactNode;
   children?: React.ReactNode;
   className?: string;
+  floating?: boolean;
+  contentClassName?: string;
 }
 
 /**
@@ -29,6 +31,8 @@ export function Sheet({
   title,
   children,
   className,
+  floating = false,
+  contentClassName,
 }: SheetProps) {
   const { ref, onKeyDown } = useNativeDialog(open, onOpenChange);
   const titleId = React.useId();
@@ -38,11 +42,17 @@ export function Sheet({
       ref={ref}
       onKeyDown={onKeyDown}
       aria-labelledby={titleId}
+      data-side={side}
       className={cn(
-        "m-0 h-dvh max-h-dvh w-[min(320px,85vw)] max-w-none bg-popover p-0 text-popover-foreground shadow-2xl backdrop:bg-overlay/50 backdrop:backdrop-blur-sm",
-        side === "left"
-          ? "mr-auto rounded-r-xl border-r border-border"
-          : "ml-auto rounded-l-xl border-l border-border",
+        "max-w-none p-0 text-popover-foreground backdrop:bg-overlay/50 backdrop:backdrop-blur-sm",
+        floating
+          ? "glass mobile-sheet rounded-2xl overflow-hidden"
+          : cn(
+              "m-0 h-dvh max-h-dvh w-[min(320px,85vw)] bg-popover shadow-2xl",
+              side === "left"
+                ? "mr-auto rounded-r-xl border-r border-border"
+                : "ml-auto rounded-l-xl border-l border-border"
+            ),
         className
       )}
     >
@@ -50,12 +60,14 @@ export function Sheet({
         <h2 id={titleId} className="sr-only">
           {title}
         </h2>
-        <div className="min-h-0 flex-1 overflow-y-auto pt-14">{children}</div>
+        <div className={cn("min-h-0 flex-1 overflow-y-auto pt-14", contentClassName)}>{children}</div>
         <Button
+          // Evita que showModal() foque a busca e abra o teclado no mobile.
+          autoFocus
           variant="ghost"
           size="icon-sm"
           aria-label="Fechar"
-          className="absolute right-3 top-3 text-muted-foreground"
+          className={cn("absolute right-3 top-3 text-muted-foreground", floating && "right-2 top-2 size-11")}
           onClick={() => onOpenChange(false)}
         >
           <X aria-hidden="true" />

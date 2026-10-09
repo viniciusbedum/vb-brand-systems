@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { Upload } from "lucide-react";
+import { UploadSimple as Upload } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 
 type UploadButtonProps = {

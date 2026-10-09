@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { CaretRight as ChevronRight } from "@/lib/icons";
 
 type BreadcrumbItem = {
   label: string;

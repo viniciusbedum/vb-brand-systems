@@ -1,7 +1,7 @@
 import type { NavConfig } from "@/lib/navigation";
 
 // Seções da sidebar e cards da home. Cada `slug` aponta para content/<slug>.mdx.
-// `icon` é o nome de um ícone do lucide-react (https://lucide.dev/icons).
+// `icon` usa os nomes Phosphor registrados em lib/icons.ts (https://phosphoricons.com).
 // Seção com `items: []` aparece como "em breve".
 export const navConfig: NavConfig = [
   {
@@ -22,7 +22,7 @@ export const navConfig: NavConfig = [
   },
   {
     title: "Universo Verbal",
-    icon: "MessageSquare",
+    icon: "ChatText",
     items: [
       { title: "Personalidade", slug: "voz-e-tom/personalidade" },
       { title: "Princípios de voz", slug: "voz-e-tom/principios" },
@@ -43,12 +43,12 @@ export const navConfig: NavConfig = [
   },
   {
     title: "Aplicações",
-    icon: "LayoutGrid",
+    icon: "SquaresFour",
     items: [{ title: "Redes sociais", slug: "aplicacoes/redes-sociais" }],
   },
   {
     title: "Universo Sonoro",
-    icon: "Waves",
+    icon: "WaveSine",
     items: [],
   },
 ];

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { expect, fn, userEvent, waitFor, within } from "@storybook/test";
-import { LogOut, Pencil, Settings, Trash2, User } from "lucide-react";
+import { SignOut as LogOut, Pencil, Gear as Settings, Trash as Trash2, User } from "@/lib/icons";
 import { buttonVariants } from "./button";
 import {
   DropdownMenu,

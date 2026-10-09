@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp } from "@/lib/icons";
 import { brand } from "@/brand/config";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
