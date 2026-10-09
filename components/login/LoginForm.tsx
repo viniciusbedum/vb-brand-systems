@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useTranslations } from 'next-intl'
 import { Link, useRouter } from '@/i18n/navigation'
+import { isSignupEnabled } from '@/lib/features'
 import { createClient } from '@/lib/supabase'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Field } from '@/components/ui/field'
@@ -89,12 +90,14 @@ export function LoginForm() {
         </Button>
       </form>
 
-      <p className="text-sm text-muted-foreground">
-        {t('login.noAccount')}{' '}
-        <Link href="/signup" className={buttonVariants({ variant: 'link', size: 'sm' })}>
-          {t('login.createAccount')}
-        </Link>
-      </p>
+      {isSignupEnabled && (
+        <p className="text-sm text-muted-foreground">
+          {t('login.noAccount')}{' '}
+          <Link href="/signup" className={buttonVariants({ variant: 'link', size: 'sm' })}>
+            {t('login.createAccount')}
+          </Link>
+        </p>
+      )}
     </div>
   )
 }

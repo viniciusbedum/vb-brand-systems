@@ -12,6 +12,13 @@ export const isDemoMode =
  * Para responder de verdade exige o modo completo + OPENROUTER_API_KEY no servidor;
  * no modo demo o chat aparece, mas responde com um aviso.
  */
+/**
+ * Cadastro público em /signup. Padrão: desligado — o primeiro admin é criado pelo painel do Supabase
+ * (Authentication > Users > Add user) e os demais membros são convidados por lá.
+ * Isto só esconde a tela; a trava de verdade é desligar "Allow new users to sign up" no Supabase.
+ */
+export const isSignupEnabled = process.env.NEXT_PUBLIC_SIGNUP_ENABLED === "true";
+
 export const isAIVisible = process.env.NEXT_PUBLIC_AI_ENABLED !== "false";
 
 // Os textos do modo demo (resposta da IA, aviso de upload, nome do visitante)

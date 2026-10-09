@@ -47,7 +47,7 @@
   },
   "demo": {
     "visitor": "Visitor",
-    "aiReply": "This is demo mode: the AI chat is not connected to any model. To enable it, set up Supabase and an OPENROUTER_API_KEY — the step-by-step is in the README.",
+    "aiReply": "This is demo mode: the AI chat is not connected to any model. To enable it, set up Supabase and an API key for your AI provider — the step-by-step is in the README.",
     "uploadNotice": "Upload unavailable in demo mode — there is no connected storage. Set up Supabase to upload files."
   },
   "preferences": {
@@ -190,7 +190,9 @@
       "joined": "Joined: {date}",
       "roleOf": "Role of {name}",
       "save": "Save",
-      "delete": "Delete"
+      "delete": "Delete",
+      "confirmDelete": "Confirm?",
+      "deleteFailed": "Could not delete the member. The server needs SUPABASE_SERVICE_ROLE_KEY set in .env.local."
     }
   },
   "common": {

@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import createIntlMiddleware from 'next-intl/middleware'
-import { isDemoMode } from '@/lib/features'
+import { isDemoMode, isSignupEnabled } from '@/lib/features'
 import { routing } from '@/i18n/routing'
 import { localeHref, type Locale } from '@/i18n/locale-href'
 
@@ -18,9 +18,12 @@ const handleI18n = createIntlMiddleware(routing)
 
 /** Separa o idioma do caminho: "/br/login" -> { locale: "pt", path: "/login" }. */
 function splitLocale(pathname: string): { locale: Locale; path: string } {
-  const pt = localeHref('/', 'pt') // "/br"
-  if (pathname === pt || pathname.startsWith(`${pt}/`)) {
-    return { locale: 'pt', path: pathname.slice(pt.length) || '/' }
+  for (const locale of routing.locales) {
+    if (locale === routing.defaultLocale) continue
+    const prefix = localeHref('/', locale) // "/br"
+    if (pathname === prefix || pathname.startsWith(`${prefix}/`)) {
+      return { locale, path: pathname.slice(prefix.length) || '/' }
+    }
   }
   return { locale: routing.defaultLocale, path: pathname }
 }
@@ -73,6 +76,9 @@ export async function middleware(request: NextRequest) {
   const {
     data: { user },
   } = await supabase.auth.getUser()
+
+  // Cadastro fechado: /signup volta para o login
+  if (path === '/signup' && !isSignupEnabled) return redirectTo(request, locale, '/login', intlResponse)
 
   const isAuthRoute = AUTH_ROUTES.includes(path)
 

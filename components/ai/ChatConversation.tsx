@@ -149,6 +149,7 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let buffer = "";
+        let failed = false;
 
         while (true) {
           const { done, value } = await reader.read();
@@ -161,7 +162,12 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
             const payload = line.slice(6);
             if (payload === "[DONE]") break;
             try {
-              const { delta } = JSON.parse(payload) as { delta: string };
+              const { delta, error } = JSON.parse(payload) as { delta?: string; error?: boolean };
+              if (error) {
+                failed = true;
+                continue;
+              }
+              if (!delta) continue;
               setMessages((prev) => {
                 const copy = [...prev];
                 copy[copy.length - 1] = {
@@ -176,6 +182,7 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
             }
           }
         }
+        if (failed) throw new Error("AI provider error");
       } catch {
         setMessages((prev) => {
           const copy = [...prev];

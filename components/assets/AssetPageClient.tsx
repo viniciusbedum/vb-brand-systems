@@ -125,12 +125,14 @@ export function AssetPageClient({ category }: AssetPageClientProps) {
           onChange={setSearch}
           placeholder={t("searchIn", { category: category.label.toLowerCase() })}
         />
-        <UploadButton
-          accept={category.accept}
-          onFiles={handleFiles}
-          disabled={uploading || (!isDemoMode && !userId)}
-          loading={uploading}
-        />
+        {(isDemoMode || isAdmin) && (
+          <UploadButton
+            accept={category.accept}
+            onFiles={handleFiles}
+            disabled={uploading}
+            loading={uploading}
+          />
+        )}
       </div>
 
       {notice && (

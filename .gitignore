@@ -17,8 +17,8 @@
 # os / editor
 .DS_Store
 *.pem
-.claude/
-.agents/
+# Claude Code: personal settings stay local; the skills in .claude/ and .agents/ ship with the template
+.claude/settings.local.json
 
 # debug
 npm-debug.log*

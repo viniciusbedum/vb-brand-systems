@@ -40,6 +40,8 @@ export function MembersTab({ role, currentUserId }: Props) {
   const [pendingRoles, setPendingRoles] = useState<Record<string, 'admin' | 'staff'>>({})
   const [savingId, setSavingId] = useState<string | null>(null)
   const [deletingId, setDeletingId] = useState<string | null>(null)
+  const [confirmingId, setConfirmingId] = useState<string | null>(null)
+  const [deleteError, setDeleteError] = useState(false)
 
   useEffect(() => {
     async function fetchMembers() {
@@ -84,14 +86,17 @@ export function MembersTab({ role, currentUserId }: Props) {
 
   async function handleDelete(memberId: string) {
     setDeletingId(memberId)
+    setDeleteError(false)
     try {
-      const supabase = createClient()
-      await supabase.from('profiles').delete().eq('id', memberId)
+      // Deleting the login account needs the service role key, so it goes through a server route.
+      const res = await fetch(`/api/members/${memberId}`, { method: 'DELETE' })
+      if (!res.ok) throw new Error('delete failed')
       setMembers((prev) => prev.filter((m) => m.id !== memberId))
     } catch {
-      // ignore
+      setDeleteError(true)
     } finally {
       setDeletingId(null)
+      setConfirmingId(null)
     }
   }
 
@@ -147,6 +152,12 @@ export function MembersTab({ role, currentUserId }: Props) {
             <option value="staff">Staff</option>
           </Select>
         </div>
+      )}
+
+      {deleteError && (
+        <p role="alert" className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+          {t('members.deleteFailed')}
+        </p>
       )}
 
       {/* List header */}
@@ -226,10 +237,11 @@ export function MembersTab({ role, currentUserId }: Props) {
                     <Button
                       size="sm"
                       variant="destructive"
-                      onClick={() => handleDelete(member.id)}
+                      onClick={() => (confirmingId === member.id ? handleDelete(member.id) : setConfirmingId(member.id))}
+                      onBlur={() => setConfirmingId((current) => (current === member.id ? null : current))}
                       disabled={deletingId === member.id}
                     >
-                      {deletingId === member.id ? '…' : t('members.delete')}
+                      {deletingId === member.id ? '…' : confirmingId === member.id ? t('members.confirmDelete') : t('members.delete')}
                     </Button>
                   </div>
                 )}

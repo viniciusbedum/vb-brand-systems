@@ -19,6 +19,8 @@ const withMDX = createMDX({
 });
 
 const nextConfig: NextConfig = {
+  // Dev server opened from another device on the network (see ALLOWED_DEV_ORIGINS in .env.example)
+  allowedDevOrigins: process.env.ALLOWED_DEV_ORIGINS?.split(",").map((origin) => origin.trim()).filter(Boolean),
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
   images: {
     formats: ["image/avif", "image/webp"],

@@ -47,7 +47,7 @@
   },
   "demo": {
     "visitor": "Visitante",
-    "aiReply": "Este é o modo demonstração: o chat de IA não está conectado a nenhum modelo. Para ativá-lo, configure o Supabase e uma OPENROUTER_API_KEY — o passo a passo está no README.",
+    "aiReply": "Este é o modo demonstração: o chat de IA não está conectado a nenhum modelo. Para ativá-lo, configure o Supabase e a chave de API do seu provedor de IA — o passo a passo está no README.",
     "uploadNotice": "Upload indisponível no modo demonstração — não há armazenamento conectado. Configure o Supabase para enviar arquivos."
   },
   "preferences": {
@@ -190,7 +190,9 @@
       "joined": "Cadastro: {date}",
       "roleOf": "Função de {name}",
       "save": "Salvar",
-      "delete": "Excluir"
+      "delete": "Excluir",
+      "confirmDelete": "Confirmar?",
+      "deleteFailed": "Não foi possível excluir o membro. O servidor precisa de SUPABASE_SERVICE_ROLE_KEY no .env.local."
     }
   },
   "common": {
