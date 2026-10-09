@@ -8,17 +8,17 @@ import { TokenTable } from "./TokenTable";
 export const mdxComponents: MDXComponents = {
   // Substituições de elementos HTML padrão
   h1: ({ children, ...props }) => (
-    <h1 className="font-heading text-3xl font-bold tracking-tight mt-10 mb-4 text-foreground scroll-mt-20 [&_a]:text-inherit [&_a]:no-underline" {...props}>
+    <h1 className="scroll-mt-20 [&_a]:text-inherit [&_a]:no-underline" {...props}>
       {children}
     </h1>
   ),
   h2: ({ children, ...props }) => (
-    <h2 className="font-heading text-2xl font-semibold tracking-tight mt-14 mb-4 scroll-mt-20 text-foreground [&_a]:text-inherit [&_a]:no-underline" {...props}>
+    <h2 className="scroll-mt-20 [&_a]:text-inherit [&_a]:no-underline" {...props}>
       {children}
     </h2>
   ),
   h3: ({ children, ...props }) => (
-    <h3 className="text-lg font-semibold mt-10 mb-3 scroll-mt-20 text-foreground [&_a]:text-inherit [&_a]:no-underline" {...props}>
+    <h3 className="scroll-mt-20 [&_a]:text-inherit [&_a]:no-underline" {...props}>
       {children}
     </h3>
   ),
@@ -48,7 +48,7 @@ export const mdxComponents: MDXComponents = {
   ),
   table: ({ children, ...props }) => (
     <div className="not-prose my-6 overflow-x-auto rounded-xl border border-border">
-      <table className="w-full text-sm" {...props}>
+      <table className="w-full text-[13px]" {...props}>
         {children}
       </table>
     </div>
@@ -64,11 +64,6 @@ export const mdxComponents: MDXComponents = {
     </td>
   ),
   hr: () => <hr className="border-border my-8" />,
-  li: ({ children, ...props }) => (
-    <li className="mb-2" {...props}>
-      {children}
-    </li>
-  ),
 
   // Componentes customizados de marca
   Callout,

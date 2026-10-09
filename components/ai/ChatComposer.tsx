@@ -1,7 +1,9 @@
 "use client";
 
+import { useLocale, useTranslations } from "next-intl";
 import { ArrowUp } from "@/lib/icons";
-import { brand } from "@/brand/config";
+import { brandCopy } from "@/brand/config";
+import type { Locale } from "@/i18n/locale-href";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -18,6 +20,8 @@ type ChatComposerProps = {
 
 export function ChatComposer({ value, onChange, onSubmit, disabled = false, variant = "hero" }: ChatComposerProps) {
   const hero = variant === "hero";
+  const locale = useLocale() as Locale;
+  const t = useTranslations("chat");
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -41,8 +45,8 @@ export function ChatComposer({ value, onChange, onSubmit, disabled = false, vari
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder={brand.ai.placeholder}
-        aria-label="Mensagem para o assistente"
+        placeholder={brandCopy[locale].ai.placeholder}
+        aria-label={t("messageLabel")}
         disabled={disabled}
         className={cn(
           "border-0 bg-transparent px-1 py-1 text-base leading-relaxed focus-visible:ring-0 focus-visible:ring-offset-0 md:text-base",
@@ -51,12 +55,12 @@ export function ChatComposer({ value, onChange, onSubmit, disabled = false, vari
       />
       <div className="mt-2 flex items-center justify-between gap-3">
         <span className="hidden text-xs text-muted-foreground sm:inline">
-          Enter envia · Shift + Enter quebra a linha
+          {t("hint")}
         </span>
         <Button
           onClick={() => onSubmit(value)}
           disabled={disabled || !value.trim()}
-          aria-label="Enviar mensagem"
+          aria-label={t("send")}
           className="ml-auto h-11 w-11 rounded-full p-0"
         >
           <ArrowUp size={20} />

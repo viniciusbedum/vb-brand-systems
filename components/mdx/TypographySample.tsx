@@ -1,4 +1,6 @@
-import { brand } from "@/brand/config";
+import { useLocale } from "next-intl";
+import { brandCopy } from "@/brand/config";
+import type { Locale } from "@/i18n/locale-href";
 import { Card } from "@/components/ui/card";
 
 type TypographySampleProps = {
@@ -15,9 +17,11 @@ export function TypographySample({
   fontFamily,
   label = fontFamily,
   weights = [400, 500, 600, 700],
-  specimenText = brand.specimenText,
+  specimenText,
   usage,
 }: TypographySampleProps) {
+  const locale = useLocale() as Locale;
+  const specimen = specimenText ?? brandCopy[locale].specimenText;
   return (
     <Card className="not-prose my-6 space-y-4 p-5 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
@@ -32,7 +36,7 @@ export function TypographySample({
             className="break-words text-2xl leading-tight"
             style={{ fontFamily, fontWeight: weight }}
           >
-            {specimenText}
+            {specimen}
           </p>
         </div>
       ))}

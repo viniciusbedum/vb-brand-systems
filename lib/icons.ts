@@ -1,5 +1,7 @@
 // Importações individuais compatíveis com React Server Components e client components.
 import { ArrowCounterClockwiseIcon as ArrowCounterClockwise } from "@phosphor-icons/react/dist/ssr/ArrowCounterClockwise";
+import { ArrowLineLeftIcon as ArrowLineLeft } from "@phosphor-icons/react/dist/ssr/ArrowLineLeft";
+import { ArrowLineRightIcon as ArrowLineRight } from "@phosphor-icons/react/dist/ssr/ArrowLineRight";
 import { ArrowUpIcon as ArrowUp } from "@phosphor-icons/react/dist/ssr/ArrowUp";
 import { BookOpenIcon as BookOpen } from "@phosphor-icons/react/dist/ssr/BookOpen";
 import { CaretDownIcon as CaretDown } from "@phosphor-icons/react/dist/ssr/CaretDown";
@@ -10,6 +12,7 @@ import { CheckIcon as Check } from "@phosphor-icons/react/dist/ssr/Check";
 import { CheckCircleIcon as CheckCircle } from "@phosphor-icons/react/dist/ssr/CheckCircle";
 import { ClockCounterClockwiseIcon as ClockCounterClockwise } from "@phosphor-icons/react/dist/ssr/ClockCounterClockwise";
 import { CopyIcon as Copy } from "@phosphor-icons/react/dist/ssr/Copy";
+import { DotsThreeIcon as DotsThree } from "@phosphor-icons/react/dist/ssr/DotsThree";
 import { DotsThreeVerticalIcon as DotsThreeVertical } from "@phosphor-icons/react/dist/ssr/DotsThreeVertical";
 import { DownloadSimpleIcon as DownloadSimple } from "@phosphor-icons/react/dist/ssr/DownloadSimple";
 import { EyeIcon as Eye } from "@phosphor-icons/react/dist/ssr/Eye";
@@ -39,6 +42,9 @@ import { StackIcon as Stack } from "@phosphor-icons/react/dist/ssr/Stack";
 import { SunIcon as Sun } from "@phosphor-icons/react/dist/ssr/Sun";
 import { TextTIcon as TextT } from "@phosphor-icons/react/dist/ssr/TextT";
 import { TrashIcon as Trash } from "@phosphor-icons/react/dist/ssr/Trash";
+import { CircleHalfIcon as CircleHalf } from "@phosphor-icons/react/dist/ssr/CircleHalf";
+import { DesktopIcon as Desktop } from "@phosphor-icons/react/dist/ssr/Desktop";
+import { TranslateIcon as Translate } from "@phosphor-icons/react/dist/ssr/Translate";
 import { UploadSimpleIcon as UploadSimple } from "@phosphor-icons/react/dist/ssr/UploadSimple";
 import { UserIcon as User } from "@phosphor-icons/react/dist/ssr/User";
 import { UsersIcon as Users } from "@phosphor-icons/react/dist/ssr/Users";
@@ -48,7 +54,7 @@ import { WaveSineIcon as WaveSine } from "@phosphor-icons/react/dist/ssr/WaveSin
 import { XIcon as X } from "@phosphor-icons/react/dist/ssr/X";
 import { XCircleIcon as XCircle } from "@phosphor-icons/react/dist/ssr/XCircle";
 
-export { ArrowCounterClockwise, ArrowUp, BookOpen, CaretDown, CaretRight, ChatCircle, ChatText, Check, CheckCircle, ClockCounterClockwise, Copy, DotsThreeVertical, DownloadSimple, Eye, File, FileText, Fingerprint, Folder, Gear, GitBranch, House, Image, Info, Key, List, MagnifyingGlass, Monitor, Moon, MusicNotes, Pencil, Plus, PushPin, Shapes, SidebarSimple, SignOut, SquaresFour, Stack, Sun, TextT, Trash, UploadSimple, User, Users, VideoCamera, Warning, WaveSine, X, XCircle };
+export { CircleHalf, Desktop, Translate, ArrowCounterClockwise, ArrowLineLeft, ArrowLineRight, ArrowUp, BookOpen, CaretDown, CaretRight, ChatCircle, ChatText, Check, CheckCircle, ClockCounterClockwise, Copy, DotsThree, DotsThreeVertical, DownloadSimple, Eye, File, FileText, Fingerprint, Folder, Gear, GitBranch, House, Image, Info, Key, List, MagnifyingGlass, Monitor, Moon, MusicNotes, Pencil, Plus, PushPin, Shapes, SidebarSimple, SignOut, SquaresFour, Stack, Sun, TextT, Trash, UploadSimple, User, Users, VideoCamera, Warning, WaveSine, X, XCircle };
 
 const navigationIcons = { BookOpen, Fingerprint, ChatText, Eye, SquaresFour, WaveSine, Stack, TextT, Image, VideoCamera, MusicNotes, FileText, Shapes, Monitor };
 

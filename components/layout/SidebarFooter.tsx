@@ -2,9 +2,9 @@
 
 import { useState } from 'react'
 import { User, Gear as Settings, SignOut as LogOut } from "@/lib/icons";
-import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { useRouter } from '@/i18n/navigation'
 import { createClient } from '@/lib/supabase'
-import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { SettingsModal } from '@/components/settings/SettingsModal'
 import {
   DropdownMenu,
@@ -29,6 +29,7 @@ export function SidebarFooter({ displayName, email, role, userId }: SidebarFoote
   const [modalOpen, setModalOpen] = useState(false)
   const [activeTab, setActiveTab] = useState<'account' | 'security' | 'members'>('account')
   const router = useRouter()
+  const t = useTranslations('account')
 
   async function handleSignOut() {
     try {
@@ -45,7 +46,7 @@ export function SidebarFooter({ displayName, email, role, userId }: SidebarFoote
     setModalOpen(true)
   }
 
-  const roleLabel = isDemoMode ? 'modo demo' : role === 'admin' ? 'admin' : 'staff'
+  const roleLabel = isDemoMode ? t('demoMode') : role === 'admin' ? t('admin') : t('staff')
 
   const avatar = (
     <span className="flex size-8 flex-shrink-0 items-center justify-center rounded-full bg-primary/15 text-link">
@@ -60,21 +61,21 @@ export function SidebarFooter({ displayName, email, role, userId }: SidebarFoote
           // Modo demo: sem ações de conta, então nada de menu vazio — só a identificação.
           <div
             className="flex h-12 min-w-0 flex-1 items-center gap-2.5 px-2"
-            title="Modo demonstração — nada é salvo."
+            title={t('demoTitle')}
           >
             {avatar}
             <span className="flex min-w-0 flex-col text-left">
               <span className="truncate text-sm font-medium">{displayName}</span>
               <span className="truncate text-xs text-muted-foreground">
                 {roleLabel}
-                <span className="sr-only"> — Modo demonstração, nada é salvo.</span>
+                <span className="sr-only"> — {t('demoSr')}</span>
               </span>
             </span>
           </div>
         ) : (
           <DropdownMenu className="block min-w-0 flex-1">
             <DropdownMenuTrigger
-              aria-label={`Menu da conta de ${displayName}`}
+              aria-label={t('menuOf', { name: displayName })}
               className={cn(
                 buttonVariants({ variant: 'ghost', size: 'md' }),
                 'h-12 w-full justify-start gap-2.5 px-2 font-normal'
@@ -90,20 +91,16 @@ export function SidebarFooter({ displayName, email, role, userId }: SidebarFoote
               {email && <DropdownMenuLabel className="truncate">{email}</DropdownMenuLabel>}
               <DropdownMenuItem onSelect={() => openSettings('account')}>
                 <Settings aria-hidden="true" />
-                Configurações
+                {t('settings')}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem variant="destructive" onSelect={handleSignOut}>
                 <LogOut aria-hidden="true" />
-                Sair
+                {t('signOut')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )}
-
-        <div className="md:hidden">
-          <ThemeToggle />
-        </div>
       </div>
 
       {modalOpen && (

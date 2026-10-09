@@ -1,0 +1,207 @@
+{
+  "shell": {
+    "sidebarNav": "Brand System navigation",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar",
+    "search": "Search",
+    "searchPlaceholder": "Search…",
+    "demoBadge": "Demo",
+    "github": "View on GitHub",
+    "quickNav": "Quick navigation",
+    "historyTitle": "Conversation history",
+    "assets": "Assets",
+    "assetsTitle": "Brand assets",
+    "content": "Content",
+    "chatWithAI": "Chat with the AI",
+    "home": "Home",
+    "chat": "Chat",
+    "newConversation": "New conversation",
+    "history": "History",
+    "chatActions": "Chat actions",
+    "assetCategories": "Asset categories",
+    "contentSections": "Content sections",
+    "pageOf": "Page in {section}",
+    "soon": "Soon",
+    "categories": "Categories",
+    "pageCount": "{count, plural, one {# page} other {# pages}}",
+    "defaultUser": "User"
+  },
+  "conversations": {
+    "rename": "Rename conversation",
+    "options": "Conversation options",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "renameAction": "Rename",
+    "delete": "Delete",
+    "empty": "No conversations yet. Chat with the AI to create history here."
+  },
+  "account": {
+    "menuOf": "{name} account menu",
+    "settings": "Settings",
+    "signOut": "Sign out",
+    "demoMode": "demo mode",
+    "admin": "admin",
+    "staff": "staff",
+    "demoTitle": "Demo mode — nothing is saved.",
+    "demoSr": "Demo mode, nothing is saved."
+  },
+  "demo": {
+    "visitor": "Visitor",
+    "aiReply": "This is demo mode: the AI chat is not connected to any model. To enable it, set up Supabase and an OPENROUTER_API_KEY — the step-by-step is in the README.",
+    "uploadNotice": "Upload unavailable in demo mode — there is no connected storage. Set up Supabase to upload files."
+  },
+  "preferences": {
+    "theme": "Theme",
+    "themeToggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark",
+    "language": "Language",
+    "languageSwitch": "Language",
+    "english": "English",
+    "portuguese": "Português",
+    "more": "More options",
+    "moreLabel": "More",
+    "system": "System",
+    "settings": "Preferences"
+  },
+  "docs": {
+    "loading": "Loading content",
+    "notFound": "Page not found",
+    "updatedOn": "Updated on {date}"
+  },
+  "auth": {
+    "loginTitle": "Sign in",
+    "signupTitle": "Create account",
+    "forgotTitle": "Recover password",
+    "resetTitle": "New password",
+    "email": "Email",
+    "emailPlaceholder": "you@email.com",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "newPassword": "New password",
+    "fullName": "Full name",
+    "namePlaceholder": "Your name",
+    "login": {
+      "subtitle": "Access the brand system.",
+      "invalid": "Invalid email or password.",
+      "forgot": "Forgot my password",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "noAccount": "Don't have an account?",
+      "createAccount": "Create account"
+    },
+    "signup": {
+      "subtitle": "Request access to the brand system.",
+      "mismatch": "Passwords do not match.",
+      "tooShort": "Password must be at least 6 characters.",
+      "created": "Account created",
+      "checkEmail": "Check your email to confirm your account.",
+      "goLogin": "Go to sign in",
+      "submit": "Create account",
+      "submitting": "Creating account…",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in"
+    },
+    "forgot": {
+      "subtitle": "Enter your email and we'll send a link to create a new password.",
+      "failed": "Could not send the email. Try again in a moment.",
+      "checkEmail": "Check your email",
+      "sent": "If an account exists for {email}, you will receive a link to create a new password.",
+      "backToLogin": "Back to sign in",
+      "submit": "Send link",
+      "submitting": "Sending…",
+      "remembered": "Remembered?"
+    },
+    "reset": {
+      "verifying": "Validating link…",
+      "invalidTitle": "Invalid link",
+      "invalidText": "This link has expired or was already used. Request a new one.",
+      "requestNew": "Request new link",
+      "subtitle": "Choose a new password for your account.",
+      "failed": "Could not save the new password. Request a new link.",
+      "submit": "Save new password",
+      "submitting": "Saving…"
+    }
+  },
+  "chat": {
+    "conversationTitle": "Conversation",
+    "newConversationTitle": "New conversation",
+    "thinking": "thinking…",
+    "error": "Could not reach the AI. Check your connection and the API key.",
+    "newConversation": "New conversation",
+    "send": "Send message",
+    "messageLabel": "Message to the assistant",
+    "hint": "Enter sends · Shift + Enter for a new line"
+  },
+  "assets": {
+    "categoryNotFound": "Category not found",
+    "brandAssets": "Brand assets",
+    "searchIn": "Search in {category}…",
+    "searchDefault": "Search assets…",
+    "searchLabel": "Search assets",
+    "fileCount": "{count, plural, one {# file} other {# files}}",
+    "fileCountFiltered": "{shown} of {total} files",
+    "noResults": "No files found for \"{search}\"",
+    "acceptedFormats": "Accepted formats",
+    "uploadLabel": "Upload files",
+    "upload": "Upload file",
+    "uploading": "Uploading…",
+    "download": "Download {name}",
+    "remove": "Remove {name}"
+  },
+  "settings": {
+    "title": "Settings",
+    "sections": "Settings sections",
+    "tabAccount": "My account",
+    "tabSecurity": "Security",
+    "tabMembers": "Members",
+    "email": "Email",
+    "account": {
+      "subtitle": "Manage your personal information.",
+      "displayName": "Display name",
+      "namePlaceholder": "Your name",
+      "saved": "Saved!",
+      "saving": "Saving…",
+      "save": "Save changes"
+    },
+    "security": {
+      "subtitle": "Manage your password and access settings.",
+      "newPassword": "New password",
+      "confirm": "Confirm new password",
+      "mismatch": "Passwords do not match.",
+      "tooShort": "Password must be at least 6 characters.",
+      "success": "Password updated successfully.",
+      "error": "Error updating password.",
+      "updating": "Updating…",
+      "update": "Update password"
+    },
+    "members": {
+      "subtitleAdmin": "Manage members and their permissions. Only administrators can access this area.",
+      "subtitleStaff": "View your access to the brand system.",
+      "searchLabel": "Search members by name",
+      "searchPlaceholder": "Search by name…",
+      "filterLabel": "Filter by role",
+      "allRoles": "All roles",
+      "list": "Member list",
+      "count": "{count, plural, one {# member} other {# members}}",
+      "none": "No members found.",
+      "user": "User",
+      "you": "You",
+      "joined": "Joined: {date}",
+      "roleOf": "Role of {name}",
+      "save": "Save",
+      "delete": "Delete"
+    }
+  },
+  "common": {
+    "close": "Close"
+  },
+  "mdx": {
+    "value": "Value",
+    "description": "Description",
+    "copy": "Copy",
+    "copied": "Copied",
+    "copyHex": "Copy {hex}",
+    "hexCopied": "{hex} copied"
+  }
+}

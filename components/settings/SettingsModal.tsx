@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
+import { useTranslations } from 'next-intl'
 import { User, Key, Users } from "@/lib/icons";
 import { Dialog } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
@@ -22,11 +23,11 @@ type SettingsModalProps = {
   userId: string
 }
 
-const navItems: { key: Tab; label: string; icon: React.ReactNode }[] = [
-  { key: 'account', label: 'Minha conta', icon: <User aria-hidden="true" /> },
-  { key: 'security', label: 'Segurança', icon: <Key aria-hidden="true" /> },
-  { key: 'members', label: 'Membros', icon: <Users aria-hidden="true" /> },
-]
+const tabIcons: Record<Tab, React.ReactNode> = {
+  account: <User aria-hidden="true" />,
+  security: <Key aria-hidden="true" />,
+  members: <Users aria-hidden="true" />,
+}
 
 export function SettingsModal({
   open,
@@ -38,6 +39,12 @@ export function SettingsModal({
   role,
   userId,
 }: SettingsModalProps) {
+  const t = useTranslations('settings')
+  const navItems: { key: Tab; label: string; icon: React.ReactNode }[] = [
+    { key: 'account', label: t('tabAccount'), icon: tabIcons.account },
+    { key: 'security', label: t('tabSecurity'), icon: tabIcons.security },
+    { key: 'members', label: t('tabMembers'), icon: tabIcons.members },
+  ]
   const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({
     account: null,
     security: null,
@@ -65,14 +72,14 @@ export function SettingsModal({
       onOpenChange={(value) => {
         if (!value) onClose()
       }}
-      title="Configurações"
+      title={t('title')}
       size="lg"
     >
       {open && (
         <div className="grid gap-4 md:grid-cols-[200px_1fr]">
           <div
             role="tablist"
-            aria-label="Seções de configurações"
+            aria-label={t('sections')}
             aria-orientation="vertical"
             className="flex gap-1 overflow-x-auto md:flex-col md:overflow-visible"
           >

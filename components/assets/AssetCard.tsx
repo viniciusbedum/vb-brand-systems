@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { X, DownloadSimple as Download, FileText, MusicNotes as Music, VideoCamera as Video, Image, File } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
@@ -39,6 +40,7 @@ function getFileIcon(type: string) {
 }
 
 export function AssetCard({ asset, onDelete, isAdmin }: AssetCardProps) {
+  const t = useTranslations("assets");
   const isImage = asset.type.startsWith("image/");
   const Icon = getFileIcon(asset.type);
   const extension = asset.name.split(".").pop() ?? "";
@@ -77,7 +79,7 @@ export function AssetCard({ asset, onDelete, isAdmin }: AssetCardProps) {
             href={asset.url}
             download={asset.name}
             className={buttonVariants({ variant: "secondary", size: "icon-sm" })}
-            aria-label={`Baixar ${asset.name}`}
+            aria-label={t("download", { name: asset.name })}
           >
             <Download aria-hidden="true" />
           </a>
@@ -86,7 +88,7 @@ export function AssetCard({ asset, onDelete, isAdmin }: AssetCardProps) {
               variant="destructive"
               size="icon-sm"
               onClick={() => onDelete(asset.id, asset.storage_path)}
-              aria-label={`Remover ${asset.name}`}
+              aria-label={t("remove", { name: asset.name })}
             >
               <X aria-hidden="true" />
             </Button>

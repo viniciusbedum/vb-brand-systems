@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Check, Copy } from "@/lib/icons";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -15,6 +16,7 @@ export type ColorSwatchProps = {
 };
 
 export function ColorSwatch({ name, hex, rgb, token, usage }: ColorSwatchProps) {
+  const t = useTranslations("mdx");
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -45,7 +47,7 @@ export function ColorSwatch({ name, hex, rgb, token, usage }: ColorSwatchProps) 
         onClick={handleCopy}
         className="group relative h-24 w-full rounded-t-xl rounded-b-none p-0 hover:bg-transparent focus-visible:ring-inset"
         style={{ backgroundColor: hex }}
-        aria-label={`Copiar ${hex}`}
+        aria-label={t("copyHex", { hex })}
       >
         <span
           className={cn(
@@ -53,7 +55,7 @@ export function ColorSwatch({ name, hex, rgb, token, usage }: ColorSwatchProps) 
             copied ? "opacity-100" : "opacity-0",
           )}>
           {copied ? <Check className="size-3.5" /> : <Copy className="size-3.5" />}
-          {copied ? "Copiado" : "Copiar"}
+          {copied ? t("copied") : t("copy")}
         </span>
       </Button>
       <div className="space-y-1 p-4">
@@ -63,7 +65,7 @@ export function ColorSwatch({ name, hex, rgb, token, usage }: ColorSwatchProps) 
         {token && <p className="break-all font-mono text-xs text-muted-foreground">{token}</p>}
         {usage && <p className="text-xs text-foreground/80">{usage}</p>}
         <span className="sr-only" aria-live="polite">
-          {copied ? `${hex} copiado` : ""}
+          {copied ? t("hexCopied", { hex }) : ""}
         </span>
       </div>
     </Card>

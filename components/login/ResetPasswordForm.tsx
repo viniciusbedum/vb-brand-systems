@@ -1,8 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
-import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
+import { Link, useRouter } from '@/i18n/navigation'
 import { createClient } from '@/lib/supabase'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Field } from '@/components/ui/field'
@@ -12,6 +13,7 @@ type Status = 'verifying' | 'ready' | 'invalid'
 
 export function ResetPasswordForm() {
   const router = useRouter()
+  const t = useTranslations('auth')
   const searchParams = useSearchParams()
   const [status, setStatus] = useState<Status>('verifying')
   const [password, setPassword] = useState('')
@@ -41,11 +43,11 @@ export function ResetPasswordForm() {
     setError(null)
 
     if (password !== confirmPassword) {
-      setError('As senhas não coincidem.')
+      setError(t('signup.mismatch'))
       return
     }
     if (password.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres.')
+      setError(t('signup.tooShort'))
       return
     }
 
@@ -54,7 +56,7 @@ export function ResetPasswordForm() {
     const { error: updateError } = await supabase.auth.updateUser({ password })
 
     if (updateError) {
-      setError('Não foi possível salvar a nova senha. Solicite um novo link.')
+      setError(t('reset.failed'))
       setLoading(false)
       return
     }
@@ -64,20 +66,20 @@ export function ResetPasswordForm() {
   }
 
   if (status === 'verifying') {
-    return <p className="text-sm text-muted-foreground">Validando link…</p>
+    return <p className="text-sm text-muted-foreground">{t('reset.verifying')}</p>
   }
 
   if (status === 'invalid') {
     return (
       <div className="space-y-6">
         <div className="space-y-1.5">
-          <h1 className="text-2xl font-semibold tracking-tight">Link inválido</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{t('reset.invalidTitle')}</h1>
           <p className="text-sm text-muted-foreground">
-            Este link expirou ou já foi usado. Solicite um novo.
+            {t('reset.invalidText')}
           </p>
         </div>
         <Link href="/forgot-password" className={buttonVariants() + ' w-full'}>
-          Solicitar novo link
+          {t('reset.requestNew')}
         </Link>
       </div>
     )
@@ -86,12 +88,12 @@ export function ResetPasswordForm() {
   return (
     <div className="space-y-6">
       <div className="space-y-1.5">
-        <h1 className="text-2xl font-semibold tracking-tight">Nova senha</h1>
-        <p className="text-sm text-muted-foreground">Escolha uma nova senha para sua conta.</p>
+        <h1 className="text-2xl font-semibold tracking-tight">{t('resetTitle')}</h1>
+        <p className="text-sm text-muted-foreground">{t('reset.subtitle')}</p>
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <Field label="Nova senha" htmlFor="password">
+        <Field label={t('newPassword')} htmlFor="password">
           <Input
             type="password"
             autoComplete="new-password"
@@ -102,7 +104,7 @@ export function ResetPasswordForm() {
           />
         </Field>
 
-        <Field label="Confirmar senha" htmlFor="confirmPassword">
+        <Field label={t('confirmPassword')} htmlFor="confirmPassword">
           <Input
             type="password"
             autoComplete="new-password"
@@ -120,7 +122,7 @@ export function ResetPasswordForm() {
         )}
 
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Salvando…' : 'Salvar nova senha'}
+          {loading ? t('reset.submitting') : t('reset.submit')}
         </Button>
       </form>
     </div>

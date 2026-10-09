@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+
 type Token = {
   name: string;
   value: string;
@@ -9,14 +11,15 @@ type TokenTableProps = {
 };
 
 export function TokenTable({ tokens }: TokenTableProps) {
+  const t = useTranslations("mdx");
   return (
     <div className="not-prose my-6 overflow-x-auto rounded-xl border border-border">
       <table className="w-full text-sm">
         <thead>
           <tr className="bg-muted/50">
             <th className="px-4 py-3 text-left font-medium text-muted-foreground">Token</th>
-            <th className="px-4 py-3 text-left font-medium text-muted-foreground">Valor</th>
-            <th className="px-4 py-3 text-left font-medium text-muted-foreground">Descrição</th>
+            <th className="px-4 py-3 text-left font-medium text-muted-foreground">{t("value")}</th>
+            <th className="px-4 py-3 text-left font-medium text-muted-foreground">{t("description")}</th>
           </tr>
         </thead>
         <tbody>

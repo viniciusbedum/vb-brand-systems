@@ -1,0 +1,40 @@
+---
+title: Color palette
+description: Primary and supporting colors, with values and tokens.
+section: Visual Universe
+order: 3
+lastUpdated: "2026-10-09"
+---
+
+## Primary colors
+
+The three colors that appear the most and make the brand recognizable. Click a color to copy its HEX.
+
+<ColorPalette columns={3} colors={[
+  { name: "Petrol", hex: "#226789", rgb: "34, 103, 137", token: "--primary", usage: "Actions, links and highlights" },
+  { name: "Deep petrol", hex: "#1b4c64", rgb: "27, 76, 100", token: "--backdrop", usage: "Color blocks and background glow" },
+  { name: "Black", hex: "#0c0c0c", rgb: "12, 12, 12", token: "--background (dark)", usage: "Dark theme background" },
+]} />
+
+## Supporting colors
+
+<ColorPalette columns={4} colors={[
+  { name: "Light petrol", hex: "#3a8fba", rgb: "58, 143, 186", token: "--link (dark)", usage: "Links and icons on the dark theme" },
+  { name: "White", hex: "#ffffff", rgb: "255, 255, 255", token: "--background (light)", usage: "Light theme background and text on petrol" },
+  { name: "Gray", hex: "#a0a0a0", rgb: "160, 160, 160", token: "--muted-foreground (dark)", usage: "Secondary text on the dark theme" },
+  { name: "Emphasis red", hex: "#dc2626", rgb: "220, 38, 38", token: "--destructive", usage: "Alerts and errors" },
+]} />
+
+## Tokens in code
+
+Colors live in `brand/theme.css` as HSL variables. Components never use a fixed color: changing a token changes the whole system.
+
+<TokenTable tokens={[
+  { name: "--primary", value: "200 60% 34%", description: "Petrol — buttons, focus and highlights (light theme)" },
+  { name: "--primary (dark)", value: "200 57% 38%", description: "A slightly lighter petrol for the dark theme" },
+  { name: "--link", value: "200 60% 34%", description: "Links and icons; on the dark theme it becomes 200 52% 48%" },
+  { name: "--background", value: "0 0% 100%", description: "White — light theme background; dark uses 0 0% 5%" },
+  { name: "--foreground", value: "0 0% 9%", description: "Light theme text; dark uses 0 0% 93%" },
+  { name: "--backdrop", value: "200 57% 25%", description: "Deep petrol — radial glow of the dark theme" },
+  { name: "--destructive", value: "0 72% 51%", description: "Red — errors and destructive actions" },
+]} />

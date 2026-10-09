@@ -1,0 +1,36 @@
+---
+title: Color usage
+description: Proportion, approved combinations and contrast.
+section: Visual Universe
+order: 4
+lastUpdated: "2026-10-09"
+---
+
+## The 60 · 30 · 10 proportion
+
+- **60% neutrals** — white or black, in backgrounds and large areas.
+- **30% text** — black, white and gray for content and structural elements.
+- **10% petrol** — whatever needs attention: buttons, links, one highlight per piece.
+
+Red is an exception, not decoration: it appears only for alerts and errors.
+
+## Approved combinations
+
+Contrast calculated with the WCAG 2.1 criterion. For regular text, the minimum is **4.5:1**.
+
+| Text | Background | Contrast | Use |
+|---|---|---|---|
+| Black (`#0c0c0c`) | White | 19.56:1 | ✅ Any text |
+| White | Petrol (`#226789`) | 6.23:1 | ✅ Button text |
+| White | Deep petrol (`#1b4c64`) | 9.27:1 | ✅ Any text |
+| Petrol | White | 6.23:1 | ✅ Links and buttons on the light theme |
+| Light petrol (`#3a8fba`) | Black | 5.42:1 | ✅ Links on the dark theme |
+| Gray (`#a0a0a0`) | Black | 7.48:1 | ✅ Secondary text on the dark theme |
+| Red (`#dc2626`) | White | 4.83:1 | ✅ Alerts and errors |
+| `#2e80a8` | Black | 4.44:1 | ⚠️ Large text or icons only |
+| Petrol | Black | 3.14:1 | ❌ Avoid for text |
+| Light petrol | Deep petrol | 2.57:1 | ❌ Avoid |
+
+<Callout type="warning" title="Petrol on the dark theme">
+  On a black background, the base petrol does not reach enough contrast for text. Use light petrol for links and icons, and the base petrol only for fills with white text.
+</Callout>

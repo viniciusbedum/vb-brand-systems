@@ -1,0 +1,207 @@
+{
+  "shell": {
+    "sidebarNav": "Navegação do Brand System",
+    "collapse": "Recolher sidebar",
+    "expand": "Expandir sidebar",
+    "search": "Buscar",
+    "searchPlaceholder": "Buscar…",
+    "demoBadge": "Demo",
+    "github": "Ver no GitHub",
+    "quickNav": "Navegação rápida",
+    "historyTitle": "Histórico de conversas",
+    "assets": "Ativos",
+    "assetsTitle": "Ativos da marca",
+    "content": "Conteúdo",
+    "chatWithAI": "Chat com a IA",
+    "home": "Início",
+    "chat": "Chat",
+    "newConversation": "Nova conversa",
+    "history": "Histórico",
+    "chatActions": "Ações do chat",
+    "assetCategories": "Categorias de ativos",
+    "contentSections": "Seções de conteúdo",
+    "pageOf": "Página de {section}",
+    "soon": "Em breve",
+    "categories": "Categorias",
+    "pageCount": "{count, plural, one {# página} other {# páginas}}",
+    "defaultUser": "Usuário"
+  },
+  "conversations": {
+    "rename": "Renomear conversa",
+    "options": "Opções da conversa",
+    "pin": "Fixar",
+    "unpin": "Desafixar",
+    "renameAction": "Renomear",
+    "delete": "Apagar",
+    "empty": "Nenhuma conversa ainda. Converse com a IA para criar históricos aqui."
+  },
+  "account": {
+    "menuOf": "Menu da conta de {name}",
+    "settings": "Configurações",
+    "signOut": "Sair",
+    "demoMode": "modo demo",
+    "admin": "admin",
+    "staff": "staff",
+    "demoTitle": "Modo demonstração — nada é salvo.",
+    "demoSr": "Modo demonstração, nada é salvo."
+  },
+  "demo": {
+    "visitor": "Visitante",
+    "aiReply": "Este é o modo demonstração: o chat de IA não está conectado a nenhum modelo. Para ativá-lo, configure o Supabase e uma OPENROUTER_API_KEY — o passo a passo está no README.",
+    "uploadNotice": "Upload indisponível no modo demonstração — não há armazenamento conectado. Configure o Supabase para enviar arquivos."
+  },
+  "preferences": {
+    "theme": "Tema",
+    "themeToggle": "Alternar tema",
+    "light": "Claro",
+    "dark": "Escuro",
+    "language": "Idioma",
+    "languageSwitch": "Idioma",
+    "english": "English",
+    "portuguese": "Português",
+    "more": "Mais opções",
+    "moreLabel": "Mais",
+    "system": "Sistema",
+    "settings": "Preferências"
+  },
+  "docs": {
+    "loading": "Carregando conteúdo",
+    "notFound": "Página não encontrada",
+    "updatedOn": "Atualizado em {date}"
+  },
+  "auth": {
+    "loginTitle": "Acessar",
+    "signupTitle": "Criar conta",
+    "forgotTitle": "Recuperar senha",
+    "resetTitle": "Nova senha",
+    "email": "E-mail",
+    "emailPlaceholder": "seu@email.com",
+    "password": "Senha",
+    "confirmPassword": "Confirmar senha",
+    "newPassword": "Nova senha",
+    "fullName": "Nome completo",
+    "namePlaceholder": "Seu nome",
+    "login": {
+      "subtitle": "Acesse o brand system da marca.",
+      "invalid": "E-mail ou senha inválidos.",
+      "forgot": "Esqueci minha senha",
+      "submit": "Acessar",
+      "submitting": "Acessando…",
+      "noAccount": "Não tem conta?",
+      "createAccount": "Criar conta"
+    },
+    "signup": {
+      "subtitle": "Solicite acesso ao brand system.",
+      "mismatch": "As senhas não coincidem.",
+      "tooShort": "A senha deve ter pelo menos 6 caracteres.",
+      "created": "Conta criada",
+      "checkEmail": "Verifique seu e-mail para confirmar sua conta.",
+      "goLogin": "Ir para login",
+      "submit": "Criar conta",
+      "submitting": "Criando conta…",
+      "haveAccount": "Já tem conta?",
+      "signIn": "Entrar"
+    },
+    "forgot": {
+      "subtitle": "Informe seu e-mail e enviaremos um link para criar uma nova senha.",
+      "failed": "Não foi possível enviar o e-mail. Tente novamente em instantes.",
+      "checkEmail": "Verifique seu e-mail",
+      "sent": "Se existir uma conta para {email}, você receberá um link para criar uma nova senha.",
+      "backToLogin": "Voltar para o login",
+      "submit": "Enviar link",
+      "submitting": "Enviando…",
+      "remembered": "Lembrou?"
+    },
+    "reset": {
+      "verifying": "Validando link…",
+      "invalidTitle": "Link inválido",
+      "invalidText": "Este link expirou ou já foi usado. Solicite um novo.",
+      "requestNew": "Solicitar novo link",
+      "subtitle": "Escolha uma nova senha para sua conta.",
+      "failed": "Não foi possível salvar a nova senha. Solicite um novo link.",
+      "submit": "Salvar nova senha",
+      "submitting": "Salvando…"
+    }
+  },
+  "chat": {
+    "conversationTitle": "Conversa",
+    "newConversationTitle": "Nova conversa",
+    "thinking": "pensando…",
+    "error": "Erro ao conectar com a IA. Verifique sua conexão e a chave de API.",
+    "newConversation": "Nova conversa",
+    "send": "Enviar mensagem",
+    "messageLabel": "Mensagem para o assistente",
+    "hint": "Enter envia · Shift + Enter quebra a linha"
+  },
+  "assets": {
+    "categoryNotFound": "Categoria não encontrada",
+    "brandAssets": "Ativos da marca",
+    "searchIn": "Buscar em {category}…",
+    "searchDefault": "Buscar ativos…",
+    "searchLabel": "Buscar ativos",
+    "fileCount": "{count, plural, one {# arquivo} other {# arquivos}}",
+    "fileCountFiltered": "{shown} de {total} arquivos",
+    "noResults": "Nenhum arquivo encontrado para \"{search}\"",
+    "acceptedFormats": "Formatos aceitos",
+    "uploadLabel": "Enviar arquivos",
+    "upload": "Enviar arquivo",
+    "uploading": "Enviando…",
+    "download": "Baixar {name}",
+    "remove": "Remover {name}"
+  },
+  "settings": {
+    "title": "Configurações",
+    "sections": "Seções de configurações",
+    "tabAccount": "Minha conta",
+    "tabSecurity": "Segurança",
+    "tabMembers": "Membros",
+    "email": "E-mail",
+    "account": {
+      "subtitle": "Gerencie suas informações pessoais.",
+      "displayName": "Nome de exibição",
+      "namePlaceholder": "Seu nome",
+      "saved": "Salvo!",
+      "saving": "Salvando…",
+      "save": "Salvar alterações"
+    },
+    "security": {
+      "subtitle": "Gerencie sua senha e configurações de acesso.",
+      "newPassword": "Nova senha",
+      "confirm": "Confirmar nova senha",
+      "mismatch": "As senhas não coincidem.",
+      "tooShort": "A senha deve ter pelo menos 6 caracteres.",
+      "success": "Senha atualizada com sucesso.",
+      "error": "Erro ao atualizar senha.",
+      "updating": "Atualizando…",
+      "update": "Atualizar senha"
+    },
+    "members": {
+      "subtitleAdmin": "Gerencie membros e suas permissões. Apenas administradores têm acesso a esta área.",
+      "subtitleStaff": "Visualize seu acesso ao brand system.",
+      "searchLabel": "Buscar membros por nome",
+      "searchPlaceholder": "Buscar por nome…",
+      "filterLabel": "Filtrar por função",
+      "allRoles": "Todas as funções",
+      "list": "Lista de membros",
+      "count": "{count, plural, one {# membro} other {# membros}}",
+      "none": "Nenhum membro encontrado.",
+      "user": "Usuário",
+      "you": "Você",
+      "joined": "Cadastro: {date}",
+      "roleOf": "Função de {name}",
+      "save": "Salvar",
+      "delete": "Excluir"
+    }
+  },
+  "common": {
+    "close": "Fechar"
+  },
+  "mdx": {
+    "value": "Valor",
+    "description": "Descrição",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "copyHex": "Copiar {hex}",
+    "hexCopied": "{hex} copiado"
+  }
+}

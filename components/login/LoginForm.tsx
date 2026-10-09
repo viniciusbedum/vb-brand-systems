@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { Link, useRouter } from '@/i18n/navigation'
 import { createClient } from '@/lib/supabase'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Field } from '@/components/ui/field'
@@ -10,6 +10,7 @@ import { Input } from '@/components/ui/input'
 
 export function LoginForm() {
   const router = useRouter()
+  const t = useTranslations('auth')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
@@ -27,7 +28,7 @@ export function LoginForm() {
     })
 
     if (authError) {
-      setError('E-mail ou senha inválidos.')
+      setError(t('login.invalid'))
       setLoading(false)
       return
     }
@@ -39,16 +40,16 @@ export function LoginForm() {
   return (
     <div className="space-y-6">
       <div className="space-y-1.5">
-        <h1 className="text-2xl font-semibold tracking-tight">Acessar</h1>
-        <p className="text-sm text-muted-foreground">Acesse o brand system da marca.</p>
+        <h1 className="text-2xl font-semibold tracking-tight">{t('loginTitle')}</h1>
+        <p className="text-sm text-muted-foreground">{t('login.subtitle')}</p>
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <Field label="E-mail" htmlFor="email">
+        <Field label={t('email')} htmlFor="email">
           <Input
             type="email"
             autoComplete="email"
-            placeholder="seu@email.com"
+            placeholder={t('emailPlaceholder')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -56,14 +57,14 @@ export function LoginForm() {
         </Field>
 
         <Field
-          label="Senha"
+          label={t('password')}
           htmlFor="password"
           action={
             <Link
               href="/forgot-password"
               className={buttonVariants({ variant: 'link', size: 'sm' })}
             >
-              Esqueci minha senha
+              {t('login.forgot')}
             </Link>
           }
         >
@@ -84,14 +85,14 @@ export function LoginForm() {
         )}
 
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Acessando…' : 'Acessar'}
+          {loading ? t('login.submitting') : t('login.submit')}
         </Button>
       </form>
 
       <p className="text-sm text-muted-foreground">
-        Não tem conta?{' '}
+        {t('login.noAccount')}{' '}
         <Link href="/signup" className={buttonVariants({ variant: 'link', size: 'sm' })}>
-          Criar conta
+          {t('login.createAccount')}
         </Link>
       </p>
     </div>

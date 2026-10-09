@@ -1,10 +1,11 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { useRef, useState } from "react";
-import Link from "next/link";
-import { navConfig } from "@/lib/navigation";
-import { assetCategories } from "@/lib/asset-config";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/locale-href";
+import { getNavConfig } from "@/lib/navigation";
+import { getAssetCategories } from "@/lib/asset-config";
 import { SidebarSection } from "./SidebarSection";
 import { ChatCircle as MessageCircle, DotsThreeVertical as MoreVertical, PushPin as Pin, Pencil, Trash as Trash2 } from "@/lib/icons";
 import { Input } from "@/components/ui/input";
@@ -44,6 +45,8 @@ function ConversationItem({
   // Enter ou Esc) não deve salvar de novo nem salvar uma edição cancelada.
   const renameDoneRef = useRef(false);
   const router = useRouter();
+  const pathname = usePathname();
+  const t = useTranslations("conversations");
 
   function startRename() {
     renameDoneRef.current = false;
@@ -59,7 +62,7 @@ function ConversationItem({
 
   async function handleDelete() {
     onDelete(conv.id); // remove imediato sem flash
-    if (window.location.pathname === `/chat/${conv.id}`) {
+    if (pathname === `/chat/${conv.id}`) {
       router.push("/");
     }
     fetch(`/api/conversations/${conv.id}`, { method: "DELETE" });
@@ -91,7 +94,7 @@ function ConversationItem({
         <RowIcon aria-hidden="true" className="ml-2 size-4 flex-shrink-0 text-muted-foreground" />
         <Input
           autoFocus
-          aria-label="Renomear conversa"
+          aria-label={t("rename")}
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
           onBlur={handleRename}
@@ -130,7 +133,7 @@ function ConversationItem({
 
       <DropdownMenu className="absolute right-0 top-0">
         <DropdownMenuTrigger
-          aria-label="Opções da conversa"
+          aria-label={t("options")}
           className={cn(
             buttonVariants({ variant: "ghost", size: "icon-sm" }),
             "text-muted-foreground md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 md:focus-visible:opacity-100"
@@ -141,16 +144,16 @@ function ConversationItem({
         <DropdownMenuContent align="end" className="w-44">
           <DropdownMenuItem onSelect={() => onTogglePin(conv.id)}>
             <Pin aria-hidden="true" />
-            {pinned ? "Desafixar" : "Fixar"}
+            {pinned ? t("unpin") : t("pin")}
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={startRename}>
             <Pencil aria-hidden="true" />
-            Renomear
+            {t("renameAction")}
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive" onSelect={handleDelete}>
             <Trash2 aria-hidden="true" />
-            Apagar
+            {t("delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -160,6 +163,7 @@ function ConversationItem({
 
 export function ConversationList() {
   const pathname = usePathname();
+  const t = useTranslations("conversations");
   const { conversations, loading, deleteConversation, renameConversation, togglePin } = useConversations();
 
   if (loading) {
@@ -175,7 +179,7 @@ export function ConversationList() {
   if (conversations.length === 0) {
     return (
       <p className="px-3 text-sm text-muted-foreground">
-        Nenhuma conversa ainda. Converse com a IA para criar históricos aqui.
+        {t("empty")}
       </p>
     );
   }
@@ -212,6 +216,10 @@ export function ConversationList() {
 
 export function SidebarContent(_props: SidebarContentProps) {
   const pathname = usePathname();
+  const locale = useLocale() as Locale;
+  const t = useTranslations("shell");
+  const navConfig = getNavConfig(locale);
+  const assetCategories = getAssetCategories(locale);
   const currentSlug = pathname.startsWith("/docs/")
     ? pathname.slice("/docs/".length)
     : "";
@@ -223,7 +231,7 @@ export function SidebarContent(_props: SidebarContentProps) {
       ) : pathname.startsWith("/assets") ? (
         <>
           <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-3 mb-2">
-            Categorias
+            {t("categories")}
           </p>
           <div className="space-y-0.5">
             {assetCategories.map((category) => {

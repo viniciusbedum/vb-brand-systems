@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Field } from '@/components/ui/field'
@@ -13,6 +14,7 @@ type Props = {
 }
 
 export function MyAccountTab({ displayName, email, userId }: Props) {
+  const t = useTranslations('settings')
   const [name, setName] = useState(displayName)
   const [saving, setSaving] = useState(false)
   const [saved, setSaved] = useState(false)
@@ -40,8 +42,8 @@ export function MyAccountTab({ displayName, email, userId }: Props) {
   return (
     <div className="space-y-8">
       <div className="space-y-1.5">
-        <h3 className="text-xl font-semibold tracking-tight">Minha conta</h3>
-        <p className="text-sm text-muted-foreground">Gerencie suas informações pessoais.</p>
+        <h3 className="text-xl font-semibold tracking-tight">{t('tabAccount')}</h3>
+        <p className="text-sm text-muted-foreground">{t('account.subtitle')}</p>
       </div>
 
       <div className="flex items-center gap-4">
@@ -55,17 +57,17 @@ export function MyAccountTab({ displayName, email, userId }: Props) {
       </div>
 
       <div className="max-w-sm space-y-5">
-        <Field label="Nome de exibição" htmlFor="settings-name">
+        <Field label={t('account.displayName')} htmlFor="settings-name">
           <Input
             type="text"
             autoComplete="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Seu nome"
+            placeholder={t('account.namePlaceholder')}
           />
         </Field>
 
-        <Field label="E-mail" htmlFor="settings-email">
+        <Field label={t('email')} htmlFor="settings-email">
           <Input
             type="email"
             autoComplete="email"
@@ -76,7 +78,7 @@ export function MyAccountTab({ displayName, email, userId }: Props) {
         </Field>
 
         <Button onClick={handleSave} disabled={saving || name === displayName}>
-          {saved ? 'Salvo!' : saving ? 'Salvando…' : 'Salvar alterações'}
+          {saved ? t('account.saved') : saving ? t('account.saving') : t('account.save')}
         </Button>
       </div>
     </div>

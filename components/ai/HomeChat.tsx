@@ -1,26 +1,29 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { brand } from "@/brand/config";
+import { useLocale } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/locale-href";
+import { brandCopy } from "@/brand/config";
 import { Button } from "@/components/ui/button";
 import { ChatComposer } from "./ChatComposer";
 
 export function HomeChat() {
   const router = useRouter();
+  const locale = useLocale() as Locale;
   const [input, setInput] = useState("");
 
   const goToChat = (text: string) => {
     const trimmed = text.trim();
     if (!trimmed) return;
-    router.push(`/chat?q=${encodeURIComponent(trimmed)}`);
+    router.push({ pathname: "/chat", query: { q: trimmed } });
   };
 
   return (
     <div className="space-y-3">
       <ChatComposer value={input} onChange={setInput} onSubmit={goToChat} />
       <div className="flex flex-wrap gap-2">
-        {brand.ai.suggestions.map((s) => (
+        {brandCopy[locale].ai.suggestions.map((s) => (
           <Button
             key={s}
             variant="outline"

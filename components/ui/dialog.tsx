@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { X } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
@@ -41,6 +42,7 @@ export function Dialog({
   size = "md",
 }: DialogProps) {
   const { ref, onKeyDown } = useNativeDialog(open, onOpenChange);
+  const t = useTranslations("common");
   const titleId = React.useId();
   const descriptionId = React.useId();
 
@@ -48,10 +50,11 @@ export function Dialog({
     <dialog
       ref={ref}
       onKeyDown={onKeyDown}
+      tabIndex={-1}
       aria-labelledby={titleId}
       aria-describedby={description ? descriptionId : undefined}
       className={cn(
-        "w-[calc(100%-2rem)] rounded-xl border border-border bg-popover p-0 text-popover-foreground shadow-2xl backdrop:bg-overlay/50 backdrop:backdrop-blur-sm",
+        "w-[calc(100%-2rem)] focus:outline-none rounded-xl border border-border bg-popover p-0 text-popover-foreground shadow-2xl backdrop:bg-overlay/50 backdrop:backdrop-blur-sm",
         sizes[size],
         className
       )}
@@ -73,7 +76,8 @@ export function Dialog({
         <Button
           variant="ghost"
           size="icon-sm"
-          aria-label="Fechar"
+          aria-label={t("close")}
+          data-dialog-close=""
           className="absolute right-3 top-3 text-muted-foreground"
           onClick={() => onOpenChange(false)}
         >

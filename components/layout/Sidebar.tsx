@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { SidebarSearch } from "./SidebarSearch";
 import { SidebarContent } from "./SidebarContent";
 import { SidebarFooter } from "./SidebarFooter";
@@ -8,11 +9,13 @@ import { brand } from "@/brand/config";
 import { isDemoMode, DEMO_USER } from "@/lib/features";
 
 export async function Sidebar() {
+  const t = await getTranslations("shell");
+  const tDemo = await getTranslations("demo");
   let user = null;
   let profile: { name: string | null; role: "admin" | "staff" } | null = null;
 
   if (isDemoMode) {
-    profile = { name: DEMO_USER.name, role: DEMO_USER.role };
+    profile = { name: tDemo("visitor"), role: DEMO_USER.role };
   } else try {
     const supabase = await createClient();
     const { data } = await supabase.auth.getUser();
@@ -31,12 +34,12 @@ export async function Sidebar() {
   }
 
   const displayName =
-    profile?.name ?? user?.email?.split("@")[0] ?? "Usuário";
+    profile?.name ?? user?.email?.split("@")[0] ?? t("defaultUser");
 
   return (
     <aside
       className="glass flex h-full w-full flex-col rounded-xl"
-      aria-label="Navegação do Brand System"
+      aria-label={t("sidebarNav")}
     >
       {/* Logo area */}
       <div className="flex h-14 flex-shrink-0 items-center gap-2 px-4">

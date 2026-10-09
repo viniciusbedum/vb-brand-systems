@@ -53,6 +53,11 @@ export function useNativeDialog(
       const active = document.activeElement;
       returnFocusRef.current = active instanceof HTMLElement ? active : null;
       dialog.showModal();
+      // Se o foco inicial caiu no botão de fechar, o anel de foco apareceria sem o usuário ter
+      // navegado por teclado. Leva o foco ao próprio dialog (sem anel); o Tab segue normal.
+      if (document.activeElement instanceof HTMLElement && document.activeElement.hasAttribute("data-dialog-close")) {
+        dialog.focus({ preventScroll: true });
+      }
     } else if (!open && dialog.open) {
       dialog.close();
       restoreFocus();

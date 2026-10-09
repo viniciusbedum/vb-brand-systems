@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { getAllContentSlugs } from '@/lib/content';
+import type { Locale } from '@/i18n/locale-href';
 
 export interface ContentChunk {
   filePath: string;
@@ -10,13 +11,13 @@ export interface ContentChunk {
   content: string;
 }
 
-const CONTENT_DIR = path.join(process.cwd(), 'content');
+const CONTENT_ROOT = path.join(process.cwd(), 'content');
 
 // Todo .mdx em content/ vira conhecimento da IA — nenhuma lista manual para manter
-export function loadChunks(): ContentChunk[] {
-  return getAllContentSlugs().map((parts) => {
-    const filePath = `content/${parts.join('/')}.mdx`;
-    const raw = fs.readFileSync(path.join(CONTENT_DIR, ...parts) + '.mdx', 'utf-8');
+export function loadChunks(locale: Locale): ContentChunk[] {
+  return getAllContentSlugs(locale).map((parts) => {
+    const filePath = `content/${locale}/${parts.join('/')}.mdx`;
+    const raw = fs.readFileSync(path.join(CONTENT_ROOT, locale, ...parts) + '.mdx', 'utf-8');
     const { data, content } = matter(raw);
     return {
       filePath,
@@ -37,8 +38,8 @@ function scoreChunk(query: string, chunk: ContentChunk): number {
   }, 0);
 }
 
-export function retrieveRelevantChunks(query: string, topK = 5): string {
-  const chunks = loadChunks();
+export function retrieveRelevantChunks(query: string, locale: Locale, topK = 5): string {
+  const chunks = loadChunks(locale);
 
   const scored = chunks
     .map((chunk) => ({ chunk, score: scoreChunk(query, chunk) }))

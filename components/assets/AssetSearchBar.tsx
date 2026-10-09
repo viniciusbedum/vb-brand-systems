@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { MagnifyingGlass as Search } from "@/lib/icons";
 import { Input } from "@/components/ui/input";
 
@@ -9,7 +10,8 @@ type AssetSearchBarProps = {
   placeholder?: string;
 };
 
-export function AssetSearchBar({ value, onChange, placeholder = "Buscar ativosâ€¦" }: AssetSearchBarProps) {
+export function AssetSearchBar({ value, onChange, placeholder }: AssetSearchBarProps) {
+  const t = useTranslations("assets");
   return (
     <div className="relative flex-1">
       <Search
@@ -21,8 +23,8 @@ export function AssetSearchBar({ value, onChange, placeholder = "Buscar ativosâ€
         type="search"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        aria-label="Buscar ativos"
+        placeholder={placeholder ?? t("searchDefault")}
+        aria-label={t("searchLabel")}
         className="pl-9"
       />
     </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { MagnifyingGlass as Search } from "@/lib/icons";
 import { createClient } from '@/lib/supabase'
 import type { Profile } from '@/lib/auth'
@@ -25,12 +26,13 @@ function getInitials(name: string | null): string {
     .join('')
 }
 
-function formatDate(iso: string): string {
-  const d = new Date(iso)
-  return d.toLocaleDateString('pt-BR')
+function formatDate(iso: string, locale: string): string {
+  return new Date(iso).toLocaleDateString(locale === 'pt' ? 'pt-BR' : 'en-US')
 }
 
 export function MembersTab({ role, currentUserId }: Props) {
+  const t = useTranslations('settings')
+  const locale = useLocale()
   const [members, setMembers] = useState<Profile[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -105,16 +107,15 @@ export function MembersTab({ role, currentUserId }: Props) {
       })
 
   const count = visibleMembers.length
-  const memberWord = count === 1 ? 'membro' : 'membros'
 
   return (
     <div className="space-y-5">
       <div className="space-y-1.5">
-        <h3 className="text-xl font-semibold tracking-tight">Membros</h3>
+        <h3 className="text-xl font-semibold tracking-tight">{t('tabMembers')}</h3>
         <p className="text-sm text-muted-foreground">
           {role === 'admin'
-            ? 'Gerencie membros e suas permissões. Apenas administradores têm acesso a esta área.'
-            : 'Visualize seu acesso ao brand system.'}
+            ? t('members.subtitleAdmin')
+            : t('members.subtitleStaff')}
         </p>
       </div>
 
@@ -128,20 +129,20 @@ export function MembersTab({ role, currentUserId }: Props) {
             />
             <Input
               type="text"
-              aria-label="Buscar membros por nome"
+              aria-label={t('members.searchLabel')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar por nome…"
+              placeholder={t('members.searchPlaceholder')}
               className="pl-9"
             />
           </div>
           <Select
-            aria-label="Filtrar por função"
+            aria-label={t('members.filterLabel')}
             value={filterRole}
             onChange={(e) => setFilterRole(e.target.value as 'all' | 'admin' | 'staff')}
             className="sm:w-48"
           >
-            <option value="all">Todas as funções</option>
+            <option value="all">{t('members.allRoles')}</option>
             <option value="admin">Admin</option>
             <option value="staff">Staff</option>
           </Select>
@@ -150,8 +151,8 @@ export function MembersTab({ role, currentUserId }: Props) {
 
       {/* List header */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-medium">Lista de membros</span>
-        <span className="text-xs text-muted-foreground">{count} {memberWord}</span>
+        <span className="text-sm font-medium">{t('members.list')}</span>
+        <span className="text-xs text-muted-foreground">{t('members.count', { count })}</span>
       </div>
 
       {/* Members list */}
@@ -162,7 +163,7 @@ export function MembersTab({ role, currentUserId }: Props) {
           ))}
         </div>
       ) : visibleMembers.length === 0 ? (
-        <p className="py-8 text-center text-sm text-muted-foreground">Nenhum membro encontrado.</p>
+        <p className="py-8 text-center text-sm text-muted-foreground">{t('members.none')}</p>
       ) : (
         <div className="space-y-2">
           {visibleMembers.map((member) => {
@@ -181,16 +182,16 @@ export function MembersTab({ role, currentUserId }: Props) {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="truncate text-sm font-semibold">
-                      {member.name ?? 'Usuário'}
+                      {member.name ?? t('members.user')}
                     </span>
-                    {isCurrentUser && <Badge variant="secondary">Você</Badge>}
+                    {isCurrentUser && <Badge variant="secondary">{t('members.you')}</Badge>}
                     <Badge variant={member.role === 'admin' ? 'default' : 'secondary'}>
                       {member.role}
                     </Badge>
                   </div>
                   {member.created_at && (
                     <p className="text-xs text-muted-foreground mt-0.5">
-                      Cadastro: {formatDate(member.created_at)}
+                      {t('members.joined', { date: formatDate(member.created_at, locale) })}
                     </p>
                   )}
                 </div>
@@ -199,7 +200,7 @@ export function MembersTab({ role, currentUserId }: Props) {
                 {role === 'admin' && !isCurrentUser && (
                   <div className="flex shrink-0 items-center gap-2">
                     <Select
-                      aria-label={`Função de ${member.name ?? 'Usuário'}`}
+                      aria-label={t('members.roleOf', { name: member.name ?? t('members.user') })}
                       value={currentRole}
                       onChange={(e) =>
                         setPendingRoles((prev) => ({
@@ -219,7 +220,7 @@ export function MembersTab({ role, currentUserId }: Props) {
                       onClick={() => handleSave(member.id)}
                       disabled={!hasPendingChange || savingId === member.id}
                     >
-                      {savingId === member.id ? '…' : 'Salvar'}
+                      {savingId === member.id ? '…' : t('members.save')}
                     </Button>
 
                     <Button
@@ -228,7 +229,7 @@ export function MembersTab({ role, currentUserId }: Props) {
                       onClick={() => handleDelete(member.id)}
                       disabled={deletingId === member.id}
                     >
-                      {deletingId === member.id ? '…' : 'Excluir'}
+                      {deletingId === member.id ? '…' : t('members.delete')}
                     </Button>
                   </div>
                 )}

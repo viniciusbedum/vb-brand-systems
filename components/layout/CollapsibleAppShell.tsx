@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { usePathname } from "next/navigation";
-import { SidebarSimple as PanelLeft } from "@/lib/icons";
+import { useTranslations } from "next-intl";
+import { usePathname } from "@/i18n/navigation";
+import { ArrowLineRight } from "@/lib/icons";
 import { SidebarProvider, useSidebar } from "@/lib/sidebar-context";
 import { brand } from "@/brand/config";
 import { cn } from "@/lib/utils";
@@ -26,6 +27,7 @@ function Shell({
   const { isOpen, toggle } = useSidebar();
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const t = useTranslations("shell");
   const contentRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLElement>(null);
 
@@ -65,20 +67,20 @@ function Shell({
         {!isOpen && (
           <Button
             variant="ghost"
-            aria-label="Expandir sidebar"
+            aria-label={t("expand")}
             onClick={toggle}
             className="glass h-12 rounded-xl px-3 text-foreground"
           >
             <span className="font-heading text-sm font-bold tracking-[0.14em] select-none">
               {wordmarkInitials}
             </span>
-            <PanelLeft aria-hidden="true" />
+            <ArrowLineRight aria-hidden="true" />
           </Button>
         )}
       </div>
 
       {isAIVisible && (
-        <Dialog open={mobileOpen} onOpenChange={setMobileOpen} title="Histórico de conversas">
+        <Dialog open={mobileOpen} onOpenChange={setMobileOpen} title={t("historyTitle")}>
           <div onClick={(event) => {
             if ((event.target as HTMLElement).closest("a")) setMobileOpen(false);
           }}>
@@ -95,7 +97,7 @@ function Shell({
         <TopBar />
         {children}
       </div>
-      <nav aria-label="Navegação rápida" className="mobile-bottom-nav fixed inset-x-4 z-40 flex justify-center md:hidden pointer-events-none [&>div]:pointer-events-auto">
+      <nav aria-label={t("quickNav")} className="mobile-bottom-nav fixed inset-x-4 z-40 flex justify-center md:hidden pointer-events-none [&>div]:pointer-events-auto">
         <SidebarIconBar mobile />
       </nav>
     </div>

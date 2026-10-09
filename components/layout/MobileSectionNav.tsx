@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/locale-href";
 import { ClockCounterClockwise, getNavigationIcon } from "@/lib/icons";
-import { assetCategories } from "@/lib/asset-config";
-import { findNavSection, navConfig } from "@/lib/navigation";
+import { getAssetCategories } from "@/lib/asset-config";
+import { findNavSection, getNavConfig } from "@/lib/navigation";
 import { isAIVisible } from "@/lib/features";
 import { cn } from "@/lib/utils";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -16,11 +17,15 @@ type Category = { label: string; icon?: string; href?: string; active: boolean }
 export function MobileSectionNav({ onOpenHistory }: { onOpenHistory: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
+  const locale = useLocale() as Locale;
+  const t = useTranslations("shell");
+  const assetCategories = getAssetCategories(locale);
+  const navConfig = getNavConfig(locale);
   const railRef = useRef<HTMLDivElement>(null);
   const isAssets = pathname.startsWith("/assets");
   const isDocs = pathname.startsWith("/docs/");
   const slug = isDocs ? pathname.slice(6) : "";
-  const section = findNavSection(slug);
+  const section = findNavSection(locale, slug);
 
   // Move somente a faixa horizontal, sem deslocar o conteúdo da página.
   useEffect(() => {
@@ -35,9 +40,9 @@ export function MobileSectionNav({ onOpenHistory }: { onOpenHistory: () => void 
 
   if (isAIVisible && (pathname === "/" || pathname.startsWith("/chat"))) {
     return (
-      <nav aria-label="Ações do chat" className="flex gap-2 px-4 pb-3">
+      <nav aria-label={t("chatActions")} className="flex gap-2 px-4 pb-3">
         <Button variant="ghost" className="glass min-h-11 gap-2 rounded-xl" onClick={onOpenHistory} aria-haspopup="dialog">
-          <ClockCounterClockwise aria-hidden="true" />Histórico
+          <ClockCounterClockwise aria-hidden="true" />{t("history")}
         </Button>
       </nav>
     );
@@ -58,7 +63,7 @@ export function MobileSectionNav({ onOpenHistory }: { onOpenHistory: () => void 
 
   return (
     <div className="min-w-0 pb-3">
-      <nav aria-label={isAssets ? "Categorias de ativos" : "Seções de conteúdo"}>
+      <nav aria-label={isAssets ? t("assetCategories") : t("contentSections")}>
         <div ref={railRef} className="flex gap-2 overflow-x-auto overscroll-x-contain px-4 py-1 scroll-px-4">
           {categories.map(category => {
             const Icon = getNavigationIcon(category.icon);
@@ -67,14 +72,14 @@ export function MobileSectionNav({ onOpenHistory }: { onOpenHistory: () => void 
             return category.href ? (
               <Link key={category.label} href={category.href} className={className} aria-current={category.active ? (isAssets ? "page" : "true") : undefined}>{content}</Link>
             ) : (
-              <Button key={category.label} disabled className={className}>{content}<span className="text-xs">Em breve</span></Button>
+              <Button key={category.label} disabled className={className}>{content}<span className="text-xs">{t("soon")}</span></Button>
             );
           })}
         </div>
       </nav>
       {isDocs && section && section.items.length > 1 && (
         <div className="px-4 pt-2">
-          <label htmlFor="mobile-doc-page" className="sr-only">Página de {section.title}</label>
+          <label htmlFor="mobile-doc-page" className="sr-only">{t("pageOf", { section: section.title })}</label>
           <Select id="mobile-doc-page" value={slug} onChange={event => router.push(`/docs/${event.target.value}`)} className="glass h-11 rounded-xl">
             {section.items.map(item => <option key={item.slug} value={item.slug}>{item.title}</option>)}
           </Select>

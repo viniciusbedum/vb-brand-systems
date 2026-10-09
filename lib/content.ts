@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import type { Locale } from "@/i18n/locale-href";
 
 export type Frontmatter = {
   title: string;
@@ -10,14 +11,19 @@ export type Frontmatter = {
   lastUpdated?: string;
 };
 
-const CONTENT_DIR = path.join(process.cwd(), "content");
+// O conteúdo vive em content/<idioma>/<slug>.mdx — o mesmo slug nos dois idiomas.
+const CONTENT_ROOT = path.join(process.cwd(), "content");
 
-export function getContentBySlug(slugParts: string[]): {
+function contentDir(locale: Locale) {
+  return path.join(CONTENT_ROOT, locale);
+}
+
+export function getContentBySlug(locale: Locale, slugParts: string[]): {
   frontmatter: Frontmatter;
   filePath: string;
 } {
   const slugPath = slugParts.join("/");
-  const filePath = path.join(CONTENT_DIR, `${slugPath}.mdx`);
+  const filePath = path.join(contentDir(locale), `${slugPath}.mdx`);
 
   if (!fs.existsSync(filePath)) {
     throw new Error(`Content file not found: ${filePath}`);
@@ -32,7 +38,7 @@ export function getContentBySlug(slugParts: string[]): {
   };
 }
 
-export function getAllContentSlugs(): string[][] {
+export function getAllContentSlugs(locale: Locale): string[][] {
   const slugs: string[][] = [];
 
   function walk(dir: string, parts: string[] = []) {
@@ -49,6 +55,6 @@ export function getAllContentSlugs(): string[][] {
     }
   }
 
-  walk(CONTENT_DIR);
+  walk(contentDir(locale));
   return slugs;
 }

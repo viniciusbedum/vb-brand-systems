@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useTranslations } from 'next-intl'
 import { createClient } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Field } from '@/components/ui/field'
@@ -12,6 +13,7 @@ type Props = {
 }
 
 export function SecurityTab({ email }: Props) {
+  const t = useTranslations('settings')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [saving, setSaving] = useState(false)
@@ -19,11 +21,11 @@ export function SecurityTab({ email }: Props) {
 
   async function handleChangePassword() {
     if (!newPassword || newPassword !== confirmPassword) {
-      setMessage({ type: 'error', text: 'As senhas não coincidem.' })
+      setMessage({ type: 'error', text: t('security.mismatch') })
       return
     }
     if (newPassword.length < 6) {
-      setMessage({ type: 'error', text: 'A senha deve ter pelo menos 6 caracteres.' })
+      setMessage({ type: 'error', text: t('security.tooShort') })
       return
     }
     setSaving(true)
@@ -34,12 +36,12 @@ export function SecurityTab({ email }: Props) {
       if (error) {
         setMessage({ type: 'error', text: error.message })
       } else {
-        setMessage({ type: 'success', text: 'Senha atualizada com sucesso.' })
+        setMessage({ type: 'success', text: t('security.success') })
         setNewPassword('')
         setConfirmPassword('')
       }
     } catch {
-      setMessage({ type: 'error', text: 'Erro ao atualizar senha.' })
+      setMessage({ type: 'error', text: t('security.error') })
     } finally {
       setSaving(false)
     }
@@ -48,14 +50,14 @@ export function SecurityTab({ email }: Props) {
   return (
     <div className="space-y-8">
       <div className="space-y-1.5">
-        <h3 className="text-xl font-semibold tracking-tight">Segurança</h3>
+        <h3 className="text-xl font-semibold tracking-tight">{t('tabSecurity')}</h3>
         <p className="text-sm text-muted-foreground">
-          Gerencie sua senha e configurações de acesso.
+          {t('security.subtitle')}
         </p>
       </div>
 
       <div className="max-w-sm space-y-5">
-        <Field label="E-mail" htmlFor="security-email">
+        <Field label={t('email')} htmlFor="security-email">
           <Input
             type="email"
             autoComplete="email"
@@ -65,7 +67,7 @@ export function SecurityTab({ email }: Props) {
           />
         </Field>
 
-        <Field label="Nova senha" htmlFor="security-new-password">
+        <Field label={t('security.newPassword')} htmlFor="security-new-password">
           <Input
             type="password"
             autoComplete="new-password"
@@ -75,7 +77,7 @@ export function SecurityTab({ email }: Props) {
           />
         </Field>
 
-        <Field label="Confirmar nova senha" htmlFor="security-confirm-password">
+        <Field label={t('security.confirm')} htmlFor="security-confirm-password">
           <Input
             type="password"
             autoComplete="new-password"
@@ -100,7 +102,7 @@ export function SecurityTab({ email }: Props) {
         )}
 
         <Button onClick={handleChangePassword} disabled={saving || !newPassword}>
-          {saving ? 'Atualizando…' : 'Atualizar senha'}
+          {saving ? t('security.updating') : t('security.update')}
         </Button>
       </div>
     </div>

@@ -12,8 +12,8 @@ export function slugToTitle(slug: string): string {
     .join(" ");
 }
 
-export function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString("pt-BR", {
+export function formatDate(dateString: string, locale: string = "pt"): string {
+  return new Date(dateString).toLocaleDateString(locale === "pt" ? "pt-BR" : "en-US", {
     day: "2-digit",
     month: "long",
     year: "numeric",

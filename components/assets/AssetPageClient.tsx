@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect, useCallback, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import type { AssetCategory } from "@/lib/asset-config";
 import { listAssets, uploadAsset, deleteAsset, type AssetRecord } from "@/lib/assets";
 import { createClient } from "@/lib/supabase";
-import { isDemoMode, DEMO_UPLOAD_NOTICE } from "@/lib/features";
+import { isDemoMode } from "@/lib/features";
 import { listDemoAssets } from "@/lib/demo-assets";
 import { AssetBanner } from "./AssetBanner";
 import { AssetSearchBar } from "./AssetSearchBar";
@@ -33,6 +34,8 @@ function toAssetFile(record: AssetRecord): AssetFile {
 }
 
 export function AssetPageClient({ category }: AssetPageClientProps) {
+  const t = useTranslations("assets");
+  const tDemo = useTranslations("demo");
   const [assets, setAssets] = useState<AssetFile[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -83,7 +86,7 @@ export function AssetPageClient({ category }: AssetPageClientProps) {
   const handleFiles = useCallback(
     async (files: File[]) => {
       if (isDemoMode) {
-        setNotice(DEMO_UPLOAD_NOTICE);
+        setNotice(tDemo("uploadNotice"));
         return;
       }
       if (!userId) return;
@@ -97,7 +100,7 @@ export function AssetPageClient({ category }: AssetPageClientProps) {
         setUploading(false);
       }
     },
-    [category.slug, userId]
+    [category.slug, userId, tDemo]
   );
 
   const handleDelete = useCallback(async (id: string, storagePath: string) => {
@@ -120,7 +123,7 @@ export function AssetPageClient({ category }: AssetPageClientProps) {
         <AssetSearchBar
           value={search}
           onChange={setSearch}
-          placeholder={`Buscar em ${category.label.toLowerCase()}…`}
+          placeholder={t("searchIn", { category: category.label.toLowerCase() })}
         />
         <UploadButton
           accept={category.accept}
@@ -140,8 +143,8 @@ export function AssetPageClient({ category }: AssetPageClientProps) {
         <div className="flex items-center justify-between">
           <p className="text-xs text-muted-foreground">
             {filteredAssets.length === assets.length
-              ? `${assets.length} ${assets.length === 1 ? "arquivo" : "arquivos"}`
-              : `${filteredAssets.length} de ${assets.length} arquivos`}
+              ? t("fileCount", { count: assets.length })
+              : t("fileCountFiltered", { shown: filteredAssets.length, total: assets.length })}
           </p>
         </div>
       )}
@@ -159,7 +162,7 @@ export function AssetPageClient({ category }: AssetPageClientProps) {
         />
       ) : filteredAssets.length === 0 ? (
         <EmptyState
-          message={`Nenhum arquivo encontrado para "${search}"`}
+          message={t("noResults", { search })}
           extensions={category.extensions}
         />
       ) : (

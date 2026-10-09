@@ -1,17 +1,20 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
 import { Folder, FileText, ChatCircle as MessageCircle, House, Plus } from "@/lib/icons";
 import { isAIVisible } from "@/lib/features";
-import { navConfig } from "@/lib/navigation";
+import { getAllNavSlugs } from "@/lib/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { PreferencesMenu } from "./PreferencesMenu";
 
-const firstDocHref = navConfig[0]?.items[0] ? `/docs/${navConfig[0].items[0].slug}` : "/";
+const firstDocSlug = getAllNavSlugs()[0];
+const firstDocHref = firstDocSlug ? `/docs/${firstDocSlug}` : "/";
 
 export function SidebarIconBar({ mobile = false }: { mobile?: boolean }) {
   const pathname = usePathname();
+  const t = useTranslations("shell");
 
   const isActive = (pattern: string) => {
     if (pattern === "/") return pathname === "/" || pathname.startsWith("/chat");
@@ -21,11 +24,12 @@ export function SidebarIconBar({ mobile = false }: { mobile?: boolean }) {
   const iconClass = (pattern: string) =>
     cn(
       buttonVariants({ variant: "ghost", size: "icon-sm" }),
-      mobile && "h-12 w-20 flex-col gap-1 rounded-xl [&_svg]:size-6 text-xs",
+      !mobile && "h-11 w-11 [&_svg]:size-6",
+      mobile && "h-12 w-[4.5rem] flex-col gap-1 rounded-xl [&_svg]:size-6 text-xs",
       isActive(pattern) ? "bg-primary/15 text-link" : "text-muted-foreground"
     );
 
-  const homeLabel = isAIVisible ? "Chat com a IA" : "Início";
+  const homeLabel = isAIVisible ? t("chatWithAI") : t("home");
   const scrollToTop = () => {
     if (mobile) window.scrollTo({ top: 0, behavior: "instant" });
   };
@@ -35,24 +39,24 @@ export function SidebarIconBar({ mobile = false }: { mobile?: boolean }) {
       <Link
         href="/assets"
         onClick={scrollToTop}
-        title="Ativos da marca"
-        aria-label="Ativos da marca"
+        title={t("assetsTitle")}
+        aria-label={t("assetsTitle")}
         aria-current={isActive("/assets") ? "page" : undefined}
         className={iconClass("/assets")}
       >
         <Folder aria-hidden="true" />
-        {mobile && <span>Ativos</span>}
+        {mobile && <span>{t("assets")}</span>}
       </Link>
       <Link
         href={firstDocHref}
         onClick={scrollToTop}
-        title="Conteúdo"
-        aria-label="Conteúdo"
+        title={t("content")}
+        aria-label={t("content")}
         aria-current={isActive("/docs") ? "page" : undefined}
         className={iconClass("/docs")}
       >
         <FileText aria-hidden="true" />
-        {mobile && <span>Conteúdo</span>}
+        {mobile && <span>{t("content")}</span>}
       </Link>
       <Link
         href="/"
@@ -63,16 +67,19 @@ export function SidebarIconBar({ mobile = false }: { mobile?: boolean }) {
         className={iconClass("/")}
       >
         {isAIVisible ? <MessageCircle aria-hidden="true" /> : <House aria-hidden="true" />}
-        {mobile && <span>{isAIVisible ? "Chat" : "Início"}</span>}
+        {mobile && <span>{isAIVisible ? t("chat") : t("home")}</span>}
       </Link>
+      {mobile && (
+        <PreferencesMenu className="h-12 w-[4.5rem] flex-col gap-1 rounded-xl text-xs text-muted-foreground [&_svg]:size-6" />
+      )}
       {isAIVisible && !mobile && (
         <Link
           href="/chat"
-          title="Nova conversa"
-          aria-label="Nova conversa"
+          title={t("newConversation")}
+          aria-label={t("newConversation")}
           className={cn(
             buttonVariants({ variant: "ghost", size: "icon-sm" }),
-            "ml-auto text-link"
+            "ml-auto h-11 w-11 text-link [&_svg]:size-6"
           )}
         >
           <Plus aria-hidden="true" />

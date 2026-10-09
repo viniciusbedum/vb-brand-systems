@@ -3,10 +3,12 @@
 import { Moon, Sun } from "@/lib/icons";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "./button";
 
 export function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme();
+  const t = useTranslations("preferences");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -20,7 +22,7 @@ export function ThemeToggle() {
     <Button
       variant="ghost"
       size="icon-sm"
-      aria-label="Alternar tema"
+      aria-label={t("themeToggle")}
       className="text-muted-foreground"
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >

@@ -5,18 +5,21 @@ import { buildSystemPrompt } from '@/lib/system-prompt';
 import { getUser } from '@/lib/auth';
 import { brand } from '@/brand/config';
 import { isDemoMode } from '@/lib/features';
+import { routing } from '@/i18n/routing';
+import type { Locale } from '@/i18n/locale-href';
+import { RAG_HEADING } from '@/lib/system-prompt';
 
 export const dynamic = 'force-dynamic';
 
 // POST /api/chat
-// Body: { messages: Array<{ role: 'user' | 'assistant', content: string }> }
+// Body: { messages: Array<{ role: 'user' | 'assistant', content: string }>, locale?: 'en' | 'pt' }
 // Response: text/event-stream
 //   data: {"delta": "chunk"}\n\n  — text to append to the current AI message
 //   data: [DONE]\n\n             — stream complete
 export async function POST(req: NextRequest) {
   if (isDemoMode) return new Response('Not found', { status: 404 })
   if (!process.env.OPENROUTER_API_KEY) {
-    return new Response('IA não configurada: defina OPENROUTER_API_KEY', { status: 503 })
+    return new Response('AI not configured: set OPENROUTER_API_KEY', { status: 503 })
   }
 
   const user = await getUser()
@@ -31,19 +34,22 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  const { messages } = await req.json();
+  const { messages, locale: requestedLocale } = await req.json();
+  const locale: Locale = (routing.locales as readonly string[]).includes(requestedLocale)
+    ? requestedLocale
+    : routing.defaultLocale;
 
   const lastUserMessage = [...messages]
     .reverse()
     .find((m: { role: string }) => m.role === 'user');
 
   const relevantContext = lastUserMessage
-    ? retrieveRelevantChunks(lastUserMessage.content)
+    ? retrieveRelevantChunks(lastUserMessage.content, locale)
     : '';
 
-  const systemPrompt = buildSystemPrompt();
+  const systemPrompt = buildSystemPrompt(locale);
   const systemWithContext = relevantContext
-    ? `${systemPrompt}\n\n## Contexto Recuperado (RAG)\n\n${relevantContext}`
+    ? `${systemPrompt}\n\n## ${RAG_HEADING[locale]}\n\n${relevantContext}`
     : systemPrompt;
 
   const stream = await openai.chat.completions.create({

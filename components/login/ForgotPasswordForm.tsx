@@ -1,13 +1,17 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import { useLocale, useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
+import { localeHref, type Locale } from '@/i18n/locale-href'
 import { createClient } from '@/lib/supabase'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Field } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 
 export function ForgotPasswordForm() {
+  const t = useTranslations('auth')
+  const locale = useLocale() as Locale
   const [email, setEmail] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [sent, setSent] = useState(false)
@@ -20,12 +24,12 @@ export function ForgotPasswordForm() {
 
     const supabase = createClient()
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: `${window.location.origin}${localeHref('/reset-password', locale)}`,
     })
 
     setLoading(false)
     if (resetError) {
-      setError('Não foi possível enviar o e-mail. Tente novamente em instantes.')
+      setError(t('forgot.failed'))
       return
     }
     setSent(true)
@@ -35,13 +39,13 @@ export function ForgotPasswordForm() {
     return (
       <div className="space-y-6">
         <div className="space-y-1.5">
-          <h1 className="text-2xl font-semibold tracking-tight">Verifique seu e-mail</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{t('forgot.checkEmail')}</h1>
           <p className="text-sm text-muted-foreground">
-            Se existir uma conta para {email}, você receberá um link para criar uma nova senha.
+            {t('forgot.sent', { email })}
           </p>
         </div>
         <Link href="/login" className={buttonVariants({ variant: 'outline' }) + ' w-full'}>
-          Voltar para o login
+          {t('forgot.backToLogin')}
         </Link>
       </div>
     )
@@ -50,18 +54,18 @@ export function ForgotPasswordForm() {
   return (
     <div className="space-y-6">
       <div className="space-y-1.5">
-        <h1 className="text-2xl font-semibold tracking-tight">Recuperar senha</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{t('forgotTitle')}</h1>
         <p className="text-sm text-muted-foreground">
-          Informe seu e-mail e enviaremos um link para criar uma nova senha.
+          {t('forgot.subtitle')}
         </p>
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <Field label="E-mail" htmlFor="email">
+        <Field label={t('email')} htmlFor="email">
           <Input
             type="email"
             autoComplete="email"
-            placeholder="seu@email.com"
+            placeholder={t('emailPlaceholder')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -75,14 +79,14 @@ export function ForgotPasswordForm() {
         )}
 
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Enviando…' : 'Enviar link'}
+          {loading ? t('forgot.submitting') : t('forgot.submit')}
         </Button>
       </form>
 
       <p className="text-sm text-muted-foreground">
-        Lembrou?{' '}
+        {t('forgot.remembered')}{' '}
         <Link href="/login" className={buttonVariants({ variant: 'link', size: 'sm' })}>
-          Entrar
+          {t('signup.signIn')}
         </Link>
       </p>
     </div>

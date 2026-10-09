@@ -1,14 +1,16 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
+import { localeHref, type Locale } from "@/i18n/locale-href";
 import { ArrowCounterClockwise as RotateCcw } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { useConversations } from "@/lib/conversations-context";
-import { brand } from "@/brand/config";
+import { brandCopy } from "@/brand/config";
 import { Button } from "@/components/ui/button";
 import { ChatComposer } from "./ChatComposer";
-import { isDemoMode, DEMO_AI_REPLY } from "@/lib/features";
+import { isDemoMode } from "@/lib/features";
 
 interface Message {
   role: "user" | "assistant";
@@ -22,6 +24,7 @@ interface ChatConversationProps {
 }
 
 function ThinkingDots() {
+  const t = useTranslations("chat");
   return (
     <div className="flex items-center gap-2 text-sm text-muted-foreground">
       <div className="flex items-center gap-1">
@@ -36,13 +39,17 @@ function ThinkingDots() {
           />
         ))}
       </div>
-      <span className="text-xs font-sans">pensando…</span>
+      <span className="text-xs font-sans">{t("thinking")}</span>
     </div>
   );
 }
 
 export function ChatConversation({ conversationId, initialMessages, autoPrompt }: ChatConversationProps) {
   const router = useRouter();
+  const locale = useLocale() as Locale;
+  const t = useTranslations("chat");
+  const tDemo = useTranslations("demo");
+  const copy = brandCopy[locale];
   const { addConversation } = useConversations();
   const [convId, setConvId] = useState<string | null>(conversationId ?? null);
   const [messages, setMessages] = useState<Message[]>(initialMessages ?? []);
@@ -92,7 +99,7 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
       setInput("");
 
       if (isDemoMode) {
-        setMessages([...updatedMessages, { role: "assistant", content: DEMO_AI_REPLY }]);
+        setMessages([...updatedMessages, { role: "assistant", content: tDemo("aiReply") }]);
         return;
       }
 
@@ -115,7 +122,7 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
             currentConvId = data.id;
             convIdRef.current = data.id;
             setConvId(data.id);
-            window.history.replaceState({}, "", `/chat/${data.id}`);
+            window.history.replaceState({}, "", localeHref(`/chat/${data.id}`, locale));
             addConversation({
               id: data.id,
               title: trimmed.slice(0, 80),
@@ -134,10 +141,10 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
         const res = await fetch("/api/chat", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ messages: updatedMessages }),
+          body: JSON.stringify({ messages: updatedMessages, locale }),
         });
 
-        if (!res.ok || !res.body) throw new Error("Resposta inválida");
+        if (!res.ok || !res.body) throw new Error("Invalid response");
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
@@ -174,7 +181,7 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
           const copy = [...prev];
           copy[copy.length - 1] = {
             role: "assistant",
-            content: "Erro ao conectar com a IA. Verifique sua conexão e a chave de API.",
+            content: t("error"),
           };
           return copy;
         });
@@ -189,7 +196,7 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
         }
       }
     },
-    [messages, isLoading, saveMessages]
+    [messages, isLoading, saveMessages, locale, t, tDemo, addConversation]
   );
 
   useEffect(() => {
@@ -233,7 +240,7 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
                   }}
                 >
                   <RotateCcw size={14} />
-                  Nova conversa
+                  {t("newConversation")}
                 </Button>
               </div>
               {messages.map((msg, i) => {
@@ -275,10 +282,10 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
         <div data-backdrop className="mobile-chat-empty flex flex-1 flex-col items-center justify-center overflow-y-auto px-4 sm:px-6">
           <div className="w-full max-w-2xl space-y-6">
             <div className="space-y-2 text-center">
-              <h1 className="font-heading text-2xl md:text-3xl font-bold tracking-tight">
-                {brand.ai.headline}
+              <h1 className="font-heading text-[26px] md:text-[32px] leading-[1.15] font-semibold tracking-tight">
+                {copy.ai.headline}
               </h1>
-              <p className="text-muted-foreground">{brand.ai.intro}</p>
+              <p className="text-muted-foreground">{copy.ai.intro}</p>
             </div>
             {inputBox}
           </div>

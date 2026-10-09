@@ -1,13 +1,15 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 import { createClient } from '@/lib/supabase'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Field } from '@/components/ui/field'
 import { Input } from '@/components/ui/input'
 
 export function SignupForm() {
+  const t = useTranslations('auth')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,12 +23,12 @@ export function SignupForm() {
     setError(null)
 
     if (password !== confirmPassword) {
-      setError('As senhas não coincidem.')
+      setError(t('signup.mismatch'))
       return
     }
 
     if (password.length < 6) {
-      setError('A senha deve ter pelo menos 6 caracteres.')
+      setError(t('signup.tooShort'))
       return
     }
 
@@ -52,13 +54,13 @@ export function SignupForm() {
     return (
       <div className="space-y-6">
         <div className="space-y-1.5">
-          <h1 className="text-2xl font-semibold tracking-tight">Conta criada</h1>
+          <h1 className="text-2xl font-semibold tracking-tight">{t('signup.created')}</h1>
           <p className="text-sm text-muted-foreground">
-            Verifique seu e-mail para confirmar sua conta.
+            {t('signup.checkEmail')}
           </p>
         </div>
         <Link href="/login" className={buttonVariants() + ' w-full'}>
-          Ir para login
+          {t('signup.goLogin')}
         </Link>
       </div>
     )
@@ -67,36 +69,36 @@ export function SignupForm() {
   return (
     <div className="space-y-6">
       <div className="space-y-1.5">
-        <h1 className="text-2xl font-semibold tracking-tight">Criar conta</h1>
+        <h1 className="text-2xl font-semibold tracking-tight">{t('signupTitle')}</h1>
         <p className="text-sm text-muted-foreground">
-          Solicite acesso ao brand system.
+          {t('signup.subtitle')}
         </p>
       </div>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
-        <Field label="Nome completo" htmlFor="name">
+        <Field label={t('fullName')} htmlFor="name">
           <Input
             type="text"
             autoComplete="name"
-            placeholder="Seu nome"
+            placeholder={t('namePlaceholder')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
           />
         </Field>
 
-        <Field label="E-mail" htmlFor="email">
+        <Field label={t('email')} htmlFor="email">
           <Input
             type="email"
             autoComplete="email"
-            placeholder="seu@email.com"
+            placeholder={t('emailPlaceholder')}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </Field>
 
-        <Field label="Senha" htmlFor="password">
+        <Field label={t('password')} htmlFor="password">
           <Input
             type="password"
             autoComplete="new-password"
@@ -107,7 +109,7 @@ export function SignupForm() {
           />
         </Field>
 
-        <Field label="Confirmar senha" htmlFor="confirmPassword">
+        <Field label={t('confirmPassword')} htmlFor="confirmPassword">
           <Input
             type="password"
             autoComplete="new-password"
@@ -125,14 +127,14 @@ export function SignupForm() {
         )}
 
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? 'Criando conta…' : 'Criar conta'}
+          {loading ? t('signup.submitting') : t('signup.submit')}
         </Button>
       </form>
 
       <p className="text-sm text-muted-foreground">
-        Já tem conta?{' '}
+        {t('signup.haveAccount')}{' '}
         <Link href="/login" className={buttonVariants({ variant: 'link', size: 'sm' })}>
-          Entrar
+          {t('signup.signIn')}
         </Link>
       </p>
     </div>

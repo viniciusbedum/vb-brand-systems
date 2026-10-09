@@ -1,9 +1,11 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { MagnifyingGlass as Search } from "@/lib/icons";
 import { Input } from "@/components/ui/input";
 
 export function SidebarSearch() {
+  const t = useTranslations("shell");
   return (
     <div className="relative mb-4">
       <Search
@@ -12,8 +14,8 @@ export function SidebarSearch() {
       />
       <Input
         type="search"
-        aria-label="Buscar"
-        placeholder="Buscar…"
+        aria-label={t("search")}
+        placeholder={t("searchPlaceholder")}
         className="h-9 pl-9"
       />
     </div>

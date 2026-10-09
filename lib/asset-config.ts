@@ -1,3 +1,18 @@
+import type { Locale } from "@/i18n/locale-href";
+
+type Localized = Record<Locale, string>;
+
+type RawAssetCategory = {
+  slug: string;
+  label: Localized;
+  icon: string;
+  description: Localized;
+  accept: string;
+  emptyMessage: Localized;
+  extensions: string[];
+};
+
+/** Categoria de ativos já traduzida para um idioma. */
 export type AssetCategory = {
   slug: string;
   label: string;
@@ -8,81 +23,95 @@ export type AssetCategory = {
   extensions: string[];
 };
 
-export const assetCategories: AssetCategory[] = [
+// Os slugs (logotipos, imagens…) são chaves estáveis: nomeiam as pastas do storage e as URLs.
+const rawAssetCategories: RawAssetCategory[] = [
   {
     slug: "logotipos",
-    label: "Logotipos",
+    label: { en: "Logos", pt: "Logotipos" },
     icon: "Stack",
-    description: "Versões do logo em diferentes formatos e variações.",
+    description: { en: "Logo versions in different formats and variations.", pt: "Versões do logo em diferentes formatos e variações." },
     accept: ".svg,.png,.pdf,.ai,.eps",
-    emptyMessage: "Nenhum logotipo adicionado ainda.",
+    emptyMessage: { en: "No logos added yet.", pt: "Nenhum logotipo adicionado ainda." },
     extensions: ["SVG", "PNG", "PDF", "AI", "EPS"],
   },
   {
     slug: "tipografia",
-    label: "Tipografia",
+    label: { en: "Typography", pt: "Tipografia" },
     icon: "TextT",
-    description: "Fontes e arquivos de tipografia da marca.",
+    description: { en: "Brand fonts and typography files.", pt: "Fontes e arquivos de tipografia da marca." },
     accept: ".ttf,.otf,.woff,.woff2",
-    emptyMessage: "Nenhuma fonte adicionada ainda.",
+    emptyMessage: { en: "No fonts added yet.", pt: "Nenhuma fonte adicionada ainda." },
     extensions: ["TTF", "OTF", "WOFF", "WOFF2"],
   },
   {
     slug: "imagens",
-    label: "Imagens",
+    label: { en: "Images", pt: "Imagens" },
     icon: "Image",
-    description: "Fotos, ilustrações e elementos visuais da marca.",
+    description: { en: "Photos, illustrations and visual elements of the brand.", pt: "Fotos, ilustrações e elementos visuais da marca." },
     accept: "image/*",
-    emptyMessage: "Nenhuma imagem adicionada ainda.",
+    emptyMessage: { en: "No images added yet.", pt: "Nenhuma imagem adicionada ainda." },
     extensions: ["JPG", "PNG", "WEBP", "GIF", "SVG"],
   },
   {
     slug: "videos",
-    label: "Vídeos",
+    label: { en: "Videos", pt: "Vídeos" },
     icon: "VideoCamera",
-    description: "Vídeos, motion graphics e animações da marca.",
+    description: { en: "Videos, motion graphics and animations of the brand.", pt: "Vídeos, motion graphics e animações da marca." },
     accept: "video/*",
-    emptyMessage: "Nenhum vídeo adicionado ainda.",
+    emptyMessage: { en: "No videos added yet.", pt: "Nenhum vídeo adicionado ainda." },
     extensions: ["MP4", "MOV", "WEBM", "AVI"],
   },
   {
     slug: "audios",
-    label: "Áudios",
+    label: { en: "Audio", pt: "Áudios" },
     icon: "MusicNotes",
-    description: "Jingles, trilhas sonoras e identidade sonora.",
+    description: { en: "Jingles, soundtracks and sonic identity.", pt: "Jingles, trilhas sonoras e identidade sonora." },
     accept: "audio/*",
-    emptyMessage: "Nenhum áudio adicionado ainda.",
+    emptyMessage: { en: "No audio added yet.", pt: "Nenhum áudio adicionado ainda." },
     extensions: ["MP3", "WAV", "AAC", "OGG"],
   },
   {
     slug: "documentos",
-    label: "Documentos",
+    label: { en: "Documents", pt: "Documentos" },
     icon: "FileText",
-    description: "PDFs, apresentações e documentos de marca.",
+    description: { en: "PDFs, presentations and brand documents.", pt: "PDFs, apresentações e documentos de marca." },
     accept: ".pdf,.pptx,.ppt,.docx,.doc",
-    emptyMessage: "Nenhum documento adicionado ainda.",
+    emptyMessage: { en: "No documents added yet.", pt: "Nenhum documento adicionado ainda." },
     extensions: ["PDF", "PPTX", "DOCX"],
   },
   {
     slug: "icones",
-    label: "Ícones",
+    label: { en: "Icons", pt: "Ícones" },
     icon: "Shapes",
-    description: "Set de ícones e elementos iconográficos da marca.",
+    description: { en: "Icon set and iconographic elements of the brand.", pt: "Set de ícones e elementos iconográficos da marca." },
     accept: ".svg,.png,.ico",
-    emptyMessage: "Nenhum ícone adicionado ainda.",
+    emptyMessage: { en: "No icons added yet.", pt: "Nenhum ícone adicionado ainda." },
     extensions: ["SVG", "PNG", "ICO"],
   },
   {
     slug: "mockups",
-    label: "Mockups",
+    label: { en: "Mockups", pt: "Mockups" },
     icon: "Monitor",
-    description: "Mockups de produto e visualizações de marca aplicada.",
+    description: { en: "Product mockups and previews of the applied brand.", pt: "Mockups de produto e visualizações de marca aplicada." },
     accept: "image/*,.psd,.sketch,.fig",
-    emptyMessage: "Nenhum mockup adicionado ainda.",
+    emptyMessage: { en: "No mockups added yet.", pt: "Nenhum mockup adicionado ainda." },
     extensions: ["PSD", "SKETCH", "FIG", "PNG", "JPG"],
   },
 ];
 
-export function getCategoryBySlug(slug: string): AssetCategory | undefined {
-  return assetCategories.find((c) => c.slug === slug);
+export function getAssetCategories(locale: Locale): AssetCategory[] {
+  return rawAssetCategories.map((c) => ({
+    ...c,
+    label: c.label[locale],
+    description: c.description[locale],
+    emptyMessage: c.emptyMessage[locale],
+  }));
+}
+
+export function getAssetCategorySlugs(): string[] {
+  return rawAssetCategories.map((c) => c.slug);
+}
+
+export function getCategoryBySlug(locale: Locale, slug: string): AssetCategory | undefined {
+  return getAssetCategories(locale).find((c) => c.slug === slug);
 }

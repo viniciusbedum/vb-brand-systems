@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
 import { X } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
@@ -35,16 +36,18 @@ export function Sheet({
   contentClassName,
 }: SheetProps) {
   const { ref, onKeyDown } = useNativeDialog(open, onOpenChange);
+  const t = useTranslations("common");
   const titleId = React.useId();
 
   return (
     <dialog
       ref={ref}
       onKeyDown={onKeyDown}
+      tabIndex={-1}
       aria-labelledby={titleId}
       data-side={side}
       className={cn(
-        "max-w-none p-0 text-popover-foreground backdrop:bg-overlay/50 backdrop:backdrop-blur-sm",
+        "max-w-none p-0 focus:outline-none text-popover-foreground backdrop:bg-overlay/50 backdrop:backdrop-blur-sm",
         floating
           ? "glass mobile-sheet rounded-2xl overflow-hidden"
           : cn(
@@ -66,7 +69,8 @@ export function Sheet({
           autoFocus
           variant="ghost"
           size="icon-sm"
-          aria-label="Fechar"
+          aria-label={t("close")}
+          data-dialog-close=""
           className={cn("absolute right-3 top-3 text-muted-foreground", floating && "right-2 top-2 size-11")}
           onClick={() => onOpenChange(false)}
         >

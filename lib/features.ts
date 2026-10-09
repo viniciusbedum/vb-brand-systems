@@ -14,16 +14,9 @@ export const isDemoMode =
  */
 export const isAIVisible = process.env.NEXT_PUBLIC_AI_ENABLED !== "false";
 
-export const DEMO_AI_REPLY =
-  "Este é o modo demonstração: o chat de IA não está conectado a nenhum modelo. " +
-  "Para ativá-lo, configure o Supabase e uma OPENROUTER_API_KEY — o passo a passo está no README.";
-
-export const DEMO_UPLOAD_NOTICE =
-  "Upload indisponível no modo demonstração — não há armazenamento conectado. " +
-  "Configure o Supabase para enviar arquivos.";
-
+// Os textos do modo demo (resposta da IA, aviso de upload, nome do visitante)
+// estão em messages/<idioma>.json, namespace "demo".
 export const DEMO_USER = {
-  name: "Visitante",
   email: null,
   role: "staff",
 } as const;
