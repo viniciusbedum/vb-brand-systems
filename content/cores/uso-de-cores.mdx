@@ -1,0 +1,36 @@
+---
+title: Uso de cores
+description: Proporção, combinações aprovadas e contraste.
+section: Universo Visual
+order: 4
+lastUpdated: "2026-10-09"
+---
+
+## Proporção 60 · 30 · 10
+
+- **60% neutros** — branco ou preto, em fundos e grandes áreas.
+- **30% texto** — preto, branco e cinza para conteúdo e elementos estruturais.
+- **10% petróleo** — o que precisa de atenção: botões, links, um destaque por peça.
+
+O vermelho é exceção, não decoração: aparece apenas para alertas e erros.
+
+## Combinações aprovadas
+
+Contraste calculado pelo critério WCAG 2.1. Para texto comum, o mínimo é **4,5:1**.
+
+| Texto | Fundo | Contraste | Uso |
+|---|---|---|---|
+| Preto (`#0c0c0c`) | Branco | 19,56:1 | ✅ Qualquer texto |
+| Branco | Petróleo (`#226789`) | 6,23:1 | ✅ Texto de botão |
+| Branco | Petróleo profundo (`#1b4c64`) | 9,27:1 | ✅ Qualquer texto |
+| Petróleo | Branco | 6,23:1 | ✅ Links e botões no tema claro |
+| Petróleo claro (`#3a8fba`) | Preto | 5,42:1 | ✅ Links no tema escuro |
+| Cinza (`#a0a0a0`) | Preto | 7,48:1 | ✅ Texto secundário no tema escuro |
+| Vermelho (`#dc2626`) | Branco | 4,83:1 | ✅ Alertas e erros |
+| `#2e80a8` | Preto | 4,44:1 | ⚠️ Só texto grande ou ícones |
+| Petróleo | Preto | 3,14:1 | ❌ Evitar para texto |
+| Petróleo claro | Petróleo profundo | 2,57:1 | ❌ Evitar |
+
+<Callout type="warning" title="Petróleo no tema escuro">
+  Sobre fundo preto, o petróleo base não atinge contraste suficiente para texto. Use o petróleo claro em links e ícones, e o petróleo base apenas em preenchimentos com texto branco.
+</Callout>

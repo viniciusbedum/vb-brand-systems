@@ -1,0 +1,38 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+/build
+/storybook-static
+
+# env — nunca commitar chaves
+.env
+.env*.local
+
+# vercel
+.vercel
+
+# os / editor
+.DS_Store
+*.pem
+.claude/
+.agents/
+
+# debug
+npm-debug.log*
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# supabase local
+supabase/.temp/
+supabase/.branches/
+
+# docs internos — anotações e planejamento, nunca vão para o GitHub
+/docs-internos/
+
+# artefatos locais de agentes
+/.superpowers/

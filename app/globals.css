@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  /* Cores e raio vêm de brand/theme.css. Aqui ficam só os fallbacks de fonte. */
+  :root {
+    --font-sans: system-ui, sans-serif;
+    --font-mono: monospace;
+  }
+
+  /* === SCROLLBAR GLOBAL OCULTA === */
+  /* Regra central: sem scrollbar visível em nenhum elemento. Rolagem fluida preservada. */
+  * {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    height: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    height: 100dvh;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      overflow: hidden;
+    }
+  }
+
+  * {
+    @apply border-border;
+    box-sizing: border-box;
+  }
+}
+
+@layer utilities {
+  /* Gradient animation para a página de login */
+  @keyframes gradient-shift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .animate-gradient {
+    background: linear-gradient(
+      -45deg,
+      hsl(var(--gradient-1)),
+      hsl(var(--gradient-2)),
+      hsl(var(--gradient-3)),
+      hsl(var(--gradient-4))
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 8s ease infinite;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-card/60 backdrop-blur-xl border border-border/60 shadow-lg;
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass {
+      @apply bg-card;
+    }
+  }
+
+  .page-backdrop {
+    background-image: radial-gradient(
+      ellipse 480px 320px at 0% 0%,
+      hsl(var(--backdrop) / 0.55),
+      transparent 70%
+    );
+  }
+
+  /* Brilho petróleo ancorado no canto superior esquerdo da página inteira
+     (passa por trás da sidebar de vidro). Ativado por telas com [data-backdrop]. */
+  .app-shell:has([data-backdrop]) {
+    background-image: radial-gradient(
+      ellipse 70% 60% at 0% 0%,
+      hsl(var(--backdrop) / 0.6),
+      transparent 70%
+    );
+  }
+
+  @media (min-width: 768px) {
+    .app-shell:has([data-backdrop]) {
+      background-image: radial-gradient(
+        ellipse 900px 600px at 0% 0%,
+        hsl(var(--backdrop) / 0.6),
+        transparent 70%
+      );
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-gradient {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}

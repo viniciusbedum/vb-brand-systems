@@ -1,0 +1,40 @@
+---
+title: Paleta de cores
+description: Cores primárias e de apoio, com valores e tokens.
+section: Universo Visual
+order: 3
+lastUpdated: "2026-10-09"
+---
+
+## Cores primárias
+
+As três cores que mais aparecem e que tornam a marca reconhecível. Clique em uma cor para copiar o HEX.
+
+<ColorPalette columns={3} colors={[
+  { name: "Petróleo", hex: "#226789", rgb: "34, 103, 137", token: "--primary", usage: "Ações, links e destaques" },
+  { name: "Petróleo profundo", hex: "#1b4c64", rgb: "27, 76, 100", token: "--backdrop", usage: "Blocos de cor e brilho de fundo" },
+  { name: "Preto", hex: "#0c0c0c", rgb: "12, 12, 12", token: "--background (escuro)", usage: "Fundo do tema escuro" },
+]} />
+
+## Cores de apoio
+
+<ColorPalette columns={4} colors={[
+  { name: "Petróleo claro", hex: "#3a8fba", rgb: "58, 143, 186", token: "--link (escuro)", usage: "Links e ícones no tema escuro" },
+  { name: "Branco", hex: "#ffffff", rgb: "255, 255, 255", token: "--background (claro)", usage: "Fundo do tema claro e texto sobre petróleo" },
+  { name: "Cinza", hex: "#a0a0a0", rgb: "160, 160, 160", token: "--muted-foreground (escuro)", usage: "Texto secundário no tema escuro" },
+  { name: "Vermelho ênfase", hex: "#dc2626", rgb: "220, 38, 38", token: "--destructive", usage: "Alertas e erros" },
+]} />
+
+## Tokens no código
+
+As cores vivem em `brand/theme.css` como variáveis HSL. Os componentes nunca usam cor fixa: trocar um token muda o sistema inteiro.
+
+<TokenTable tokens={[
+  { name: "--primary", value: "200 60% 34%", description: "Petróleo — botões, foco e destaques (tema claro)" },
+  { name: "--primary (escuro)", value: "200 57% 38%", description: "Petróleo um pouco mais claro para o tema escuro" },
+  { name: "--link", value: "200 60% 34%", description: "Links e ícones; no tema escuro muda para 200 52% 48%" },
+  { name: "--background", value: "0 0% 100%", description: "Branco — fundo do tema claro; escuro usa 0 0% 5%" },
+  { name: "--foreground", value: "0 0% 9%", description: "Texto do tema claro; escuro usa 0 0% 93%" },
+  { name: "--backdrop", value: "200 57% 25%", description: "Petróleo profundo — brilho radial do tema escuro" },
+  { name: "--destructive", value: "0 72% 51%", description: "Vermelho — erros e ações destrutivas" },
+]} />

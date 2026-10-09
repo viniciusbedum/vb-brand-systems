@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="800" height="450">
+  <rect width="800" height="450" fill="#ffffff"/>
+  <rect x="40" y="60" width="128" height="260" rx="10" fill="#226789" stroke="#a0a0a0" stroke-width="1"/>
+  <text x="40" y="356" font-family="Montserrat, Arial, sans-serif" font-weight="700" font-size="14" fill="#0c0c0c">Petróleo</text>
+  <text x="40" y="382" font-family="Montserrat, Arial, sans-serif" font-size="14" fill="#0c0c0c" opacity="0.6">#226789</text>
+  <rect x="188" y="60" width="128" height="260" rx="10" fill="#1b4c64" stroke="#a0a0a0" stroke-width="1"/>
+  <text x="188" y="356" font-family="Montserrat, Arial, sans-serif" font-weight="700" font-size="14" fill="#0c0c0c">Petróleo profundo</text>
+  <text x="188" y="382" font-family="Montserrat, Arial, sans-serif" font-size="14" fill="#0c0c0c" opacity="0.6">#1B4C64</text>
+  <rect x="336" y="60" width="128" height="260" rx="10" fill="#0c0c0c" stroke="#a0a0a0" stroke-width="1"/>
+  <text x="336" y="356" font-family="Montserrat, Arial, sans-serif" font-weight="700" font-size="14" fill="#0c0c0c">Preto</text>
+  <text x="336" y="382" font-family="Montserrat, Arial, sans-serif" font-size="14" fill="#0c0c0c" opacity="0.6">#0C0C0C</text>
+  <rect x="484" y="60" width="128" height="260" rx="10" fill="#3a8fba" stroke="#a0a0a0" stroke-width="1"/>
+  <text x="484" y="356" font-family="Montserrat, Arial, sans-serif" font-weight="700" font-size="14" fill="#0c0c0c">Petróleo claro</text>
+  <text x="484" y="382" font-family="Montserrat, Arial, sans-serif" font-size="14" fill="#0c0c0c" opacity="0.6">#3A8FBA</text>
+  <rect x="632" y="60" width="128" height="260" rx="10" fill="#dc2626" stroke="#a0a0a0" stroke-width="1"/>
+  <text x="632" y="356" font-family="Montserrat, Arial, sans-serif" font-weight="700" font-size="14" fill="#0c0c0c">Vermelho</text>
+  <text x="632" y="382" font-family="Montserrat, Arial, sans-serif" font-size="14" fill="#0c0c0c" opacity="0.6">#DC2626</text>
+</svg>
