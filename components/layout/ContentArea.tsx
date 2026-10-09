@@ -8,7 +8,7 @@ type ContentAreaProps = {
 
 export function ContentArea({ frontmatter, children }: ContentAreaProps) {
   return (
-    <main className="flex-1 overflow-y-auto bg-background" id="content" role="main">
+    <main data-backdrop="docs" className="flex-1 overflow-y-auto" id="content" role="main">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 pt-8 md:pt-12 pb-16">
         <header className="space-y-3 pb-8 border-b border-border">
           {frontmatter.section && (

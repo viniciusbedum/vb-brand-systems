@@ -37,8 +37,11 @@
   --input: 197 14% 90%;
   --ring: 200 60% 34%;
 
-  /* Brilho radial da home (invisível no claro: branco sobre branco) */
-  --backdrop: 0 0% 100%;
+  /* Brilho radial de fundo (chat) */
+  --backdrop: 200 60% 82%;
+  /* Cor do brilho por área: ajuda a pessoa a se localizar (chat · conteúdo · ativos) */
+  --backdrop-docs: 268 70% 85%;
+  --backdrop-assets: 215 85% 82%;
 
   /* Véu atrás de Dialog/Sheet (::backdrop), usado com opacidade */
   --overlay: 0 0% 0%;
@@ -98,6 +101,8 @@
 
   /* Brilho radial da home */
   --backdrop: 200 57% 25%;
+  --backdrop-docs: 268 55% 34%;
+  --backdrop-assets: 215 75% 38%;
 
   /* Véu atrás de Dialog/Sheet (::backdrop), usado com opacidade */
   --overlay: 0 0% 0%;

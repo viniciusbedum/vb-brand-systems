@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Plus, ClockCounterClockwise, getNavigationIcon } from "@/lib/icons";
+import { ClockCounterClockwise, getNavigationIcon } from "@/lib/icons";
 import { assetCategories } from "@/lib/asset-config";
 import { findNavSection, navConfig } from "@/lib/navigation";
 import { isAIVisible } from "@/lib/features";
@@ -36,9 +36,6 @@ export function MobileSectionNav({ onOpenHistory }: { onOpenHistory: () => void 
   if (isAIVisible && (pathname === "/" || pathname.startsWith("/chat"))) {
     return (
       <nav aria-label="Ações do chat" className="flex gap-2 px-4 pb-3">
-        <Button variant="ghost" className="glass min-h-11 gap-2 rounded-xl" onClick={() => router.push(`/chat?new=${Date.now()}`)}>
-          <Plus aria-hidden="true" />Nova conversa
-        </Button>
         <Button variant="ghost" className="glass min-h-11 gap-2 rounded-xl" onClick={onOpenHistory} aria-haspopup="dialog">
           <ClockCounterClockwise aria-hidden="true" />Histórico
         </Button>
@@ -65,7 +62,7 @@ export function MobileSectionNav({ onOpenHistory }: { onOpenHistory: () => void 
         <div ref={railRef} className="flex gap-2 overflow-x-auto overscroll-x-contain px-4 py-1 scroll-px-4">
           {categories.map(category => {
             const Icon = getNavigationIcon(category.icon);
-            const className = cn(buttonVariants({ variant: "ghost" }), "glass h-11 shrink-0 gap-2 rounded-xl px-4 whitespace-nowrap", category.active && "bg-primary/15 text-link border-primary/30");
+            const className = cn(buttonVariants({ variant: "ghost" }), "glass h-11 shrink-0 gap-2 rounded-xl px-4 whitespace-nowrap", category.active && "bg-primary/15 text-link border-primary/30 hover:bg-primary/15 hover:text-link");
             const content = <><Icon aria-hidden="true" className="size-4" /><span>{category.label}</span></>;
             return category.href ? (
               <Link key={category.label} href={category.href} className={className} aria-current={category.active ? (isAssets ? "page" : "true") : undefined}>{content}</Link>

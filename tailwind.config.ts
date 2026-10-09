@@ -3,6 +3,8 @@ import typography from "@tailwindcss/typography";
 
 const config: Config = {
   darkMode: "class",
+  // Em telas de toque o :hover "gruda" após o toque; só aplica hover onde há mouse.
+  future: { hoverOnlyWhenSupported: true },
   content: [
     "./app/**/*.{ts,tsx,mdx}",
     "./components/**/*.{ts,tsx}",

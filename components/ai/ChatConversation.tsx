@@ -2,13 +2,12 @@
 
 import { useState, useRef, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowUp, ArrowCounterClockwise as RotateCcw } from "@/lib/icons";
+import { ArrowCounterClockwise as RotateCcw } from "@/lib/icons";
 import { cn } from "@/lib/utils";
 import { useConversations } from "@/lib/conversations-context";
 import { brand } from "@/brand/config";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
+import { ChatComposer } from "./ChatComposer";
 import { isDemoMode, DEMO_AI_REPLY } from "@/lib/features";
 
 interface Message {
@@ -200,13 +199,6 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
     }
   }, [autoPrompt, submit]);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      submit(input);
-    }
-  };
-
   const hasMessages = messages.length > 0;
   const isStreaming =
     isLoading &&
@@ -214,30 +206,13 @@ export function ChatConversation({ conversationId, initialMessages, autoPrompt }
     messages[messages.length - 1].role === "assistant";
 
   const inputBox = (
-    <Card glass className="w-full p-2 focus-within:ring-2 focus-within:ring-ring">
-      <div className="flex items-end gap-2">
-        <Textarea
-          autoResize
-          maxHeight={160}
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={brand.ai.placeholder}
-          aria-label="Mensagem para o assistente"
-          disabled={isLoading}
-          rows={1}
-          className="min-h-10 flex-1 border-0 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
-        />
-        <Button
-          size="icon"
-          onClick={() => submit(input)}
-          disabled={isLoading || !input.trim()}
-          aria-label="Enviar mensagem"
-        >
-          <ArrowUp size={16} />
-        </Button>
-      </div>
-    </Card>
+    <ChatComposer
+      value={input}
+      onChange={setInput}
+      onSubmit={submit}
+      disabled={isLoading}
+      variant={hasMessages ? "dock" : "hero"}
+    />
   );
 
   return (

@@ -33,16 +33,11 @@ function Shell({
     const header = headerRef.current;
     const content = contentRef.current;
     if (!header || !content) return;
-    const measure = () => {
-      const height = `${header.getBoundingClientRect().height}px`;
-      content.style.setProperty("--mobile-header-height", height);
-    };
+    const measure = () => content.style.setProperty("--mobile-header-height", `${header.getBoundingClientRect().height}px`);
     measure();
     const observer = new ResizeObserver(measure);
     observer.observe(header);
-    return () => {
-      observer.disconnect();
-    };
+    return () => observer.disconnect();
   }, []);
 
   /* Fecha o histórico ao navegar. */
@@ -94,7 +89,7 @@ function Shell({
 
       {/* Área de conteúdo */}
       <div ref={contentRef} id="content-area" className="mobile-content-area flex-1 min-w-0 flex flex-col h-full">
-        <header ref={headerRef} className="mobile-section-header md:hidden shrink-0 min-w-0">
+        <header ref={headerRef} className="mobile-section-header md:hidden sticky top-0 z-30 shrink-0 min-w-0 backdrop-blur-md">
           <MobileSectionNav onOpenHistory={() => setMobileOpen(true)} />
         </header>
         <TopBar />

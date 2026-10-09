@@ -182,23 +182,35 @@
     );
   }
 
-  /* Brilho petróleo ancorado no canto superior esquerdo da página inteira
-     (passa por trás da sidebar de vidro). Ativado por telas com [data-backdrop]. */
+  .app-shell:has([data-backdrop="docs"]) { --glow: var(--backdrop-docs); }
+  .app-shell:has([data-backdrop="assets"]) { --glow: var(--backdrop-assets); }
+
+  /* Brilho ancorado no canto superior esquerdo da viewport (passa por trás da sidebar
+     de vidro). Tamanho fixo e igual em todas as áreas, independente da altura da página.
+     Ativado por telas com [data-backdrop]; a cor vem de --glow. */
   .app-shell:has([data-backdrop]) {
+    --glow-w: 130vw;
+    --glow-h: 55svh;
+    isolation: isolate;
+  }
+
+  .app-shell:has([data-backdrop])::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
     background-image: radial-gradient(
-      ellipse 70% 60% at 0% 0%,
-      hsl(var(--backdrop) / 0.6),
+      ellipse var(--glow-w) var(--glow-h) at 0% 0%,
+      hsl(var(--glow, var(--backdrop)) / 0.6),
       transparent 70%
     );
   }
 
   @media (min-width: 768px) {
     .app-shell:has([data-backdrop]) {
-      background-image: radial-gradient(
-        ellipse 900px 600px at 0% 0%,
-        hsl(var(--backdrop) / 0.6),
-        transparent 70%
-      );
+      --glow-w: 900px;
+      --glow-h: 600px;
     }
   }
 }

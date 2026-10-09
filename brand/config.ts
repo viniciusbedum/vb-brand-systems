@@ -25,7 +25,7 @@ export const brand = {
     assistantName: "VB Brand Assistant",
     headline: "O que você quer construir hoje?",
     intro: "Pergunte, planeje e busque referências da marca VB Brand Systems.",
-    placeholder: "Pergunte sobre a marca VB Brand Systems...",
+    placeholder: "Pergunte à IA sobre a marca VB Brand Systems...",
     suggestions: [
       "Qual é a paleta de cores da marca?",
       "Como devo usar o logo em fundo escuro?",
