@@ -44,9 +44,13 @@ The AI part is optional. Without it you still have the manual and the asset libr
 Requires [Node.js](https://nodejs.org) 20 or newer.
 
 ```bash
+git clone https://github.com/viniciusbedum/vb-brand-systems.git
+cd vb-brand-systems
 npm install
 npm run dev
 ```
+
+You can also click **Use this template** on GitHub to start your own repository from it.
 
 Open http://localhost:3000 for English, or http://localhost:3000/br for Portuguese. The first visit follows your browser language.
 
