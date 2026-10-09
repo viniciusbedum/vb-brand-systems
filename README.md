@@ -194,6 +194,20 @@ Every page, menu title and interface string exists in both languages; `npm run d
 - The search box in the sidebar is not connected yet.
 - The demo asset categories keep Portuguese URLs (`/assets/logotipos`) in both languages: they name the storage folders.
 
+## Getting updates
+
+A repository created with **Use this template** is independent: it does not receive later changes by itself, and neither does a downloaded ZIP. The [changelog](CHANGELOG.md) lists what changed in each version.
+
+To bring in a newer version safely:
+
+```bash
+git remote add upstream https://github.com/viniciusbedum/vb-brand-systems.git
+git fetch upstream --tags
+git diff HEAD upstream/main --stat   # see what changed
+```
+
+Back up your work first, then copy or merge only the files you want. Do not overwrite your own `brand/`, `content/` and `messages/`, and check the changelog for changes to the database schema or the environment variables.
+
 ## Credits
 
 The sample brand ships with two open-source typefaces, both licensed under the [SIL Open Font License 1.1](https://openfontlicense.org), with their license files next to the fonts:
